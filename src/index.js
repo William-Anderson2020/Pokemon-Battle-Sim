@@ -1,7 +1,10 @@
-import { get, apiCall } from "./apiCall";
+import { get } from "./apiCall";
 
-async function test(){
-    console.log(apiCall('pokemon', 'ditto').name);
-}
-test();
+(async function(){
+    let pkmn = await get.pkmn('pikachu');
+    let type = await get.type('electric');
+    let move = await get.move('thunderbolt');
+    let item = await get.item('potion');
+    console.log(pkmn.name, type.name, move.flavor_text_entries[2].flavor_text, item.name)
+})();
 //console.log(get.pkmn('ditto').name);
