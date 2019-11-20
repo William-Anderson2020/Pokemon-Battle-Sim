@@ -1,28 +1,16 @@
 {
-  "name": "ap-project",
+  "name": "AP-Project",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
-  "dependencies": {},
-  "devDependencies": {
-    "html-webpack-plugin": "^3.2.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+  "dependencies": {
+    "webpack": "^4.41.2"
   },
+  "devDependencies": {},
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --config webpack.config.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/William-Anderson2020/AP-Project.git"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/William-Anderson2020/AP-Project/issues"
-  },
-  "homepage": "https://github.com/William-Anderson2020/AP-Project#readme"
+  "license": "ISC"
 }
