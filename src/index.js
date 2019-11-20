@@ -1,3 +1,7 @@
-import { apiCall } from "./apiCall";
+import { get, apiCall } from "./apiCall";
 
-console.log(apiCall('pokemon', 'ditto'));
+async function test(){
+    console.log(apiCall('pokemon', 'ditto').name);
+}
+test();
+//console.log(get.pkmn('ditto').name);
