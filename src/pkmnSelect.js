@@ -4,30 +4,33 @@ import { get } from "./apiCall";
 export function pkmnSelect() {
   let count;
   let form = document.querySelector(".pkmn_count");
-  let userSelections = [];
-  let compParty = [];
+  let uParty = [];
+  let cParty = [];
   clickListener(".pkmn_count_submit", function() {
+    
     count = document.querySelector('input[name="pkmn_count"]:checked').value;
     console.log(count);
     form.innerHTML = "";
-    form.innerHTML = `<div class="pkmn_select"> <input class="pkmn_select_name "type="text" value="Name a Pokemon" onfocus="this.value = ''"> <input type="submit" class="pkmn_select_submit"> </div> <div class="selection_sprite_holder"> </div> </div>`;
+    form.innerHTML = `<div class="pkmn_select"> <input class="pkmn_select_name "type="text" value="Name a Pokemon" onfocus="this.value = ''"> <input type="submit" class="pkmn_select_submit"> </div> <div class="selection_sprite_holder"> </div> <div class="selection_VS"> </div> <div class="c_sprite_holder"> </div> </div>`;
+    
     clickListener(".pkmn_select_submit", async function() {
+      //Party Builder
       let selection = document.querySelector(".pkmn_select_name").value.toLowerCase();
       let pkmn = await get.pkmn(selection);
-      userSelections.push(pkmn);
-      document.querySelector(".selection_sprite_holder").insertAdjacentHTML("beforeend",`<img src="${pkmn.sprites.front_default}">`);
-        if(userSelections.length == count){
+      let cPkmn = await get.pkmn(Math.floor(Math.random() * 807))
+      uParty.push(pkmn);
+      cParty.push(cPkmn);
+
+      document.querySelector(".selection_sprite_holder").insertAdjacentHTML("beforeend",`<img src="${pkmn.sprites.front_default}" class="selection_sprite">`);
+        if(uParty.length == count){
           document.querySelector('.pkmn_select').innerHTML = '<input type="submit" name="pkmn_confirm" id="pkmn_confirm" value="Proceed">'
+          document.querySelector('.selection_VS').innerHTML= 'VS'
+          cParty.forEach((el) => {
+            document.querySelector('.c_sprite_holder').insertAdjacentHTML("beforeend", `<img src="${el.sprites.front_default}" class="selection_sprite">`);
+          });
           clickListener('#pkmn_confirm', function(){
             form.innerHTML = '';
-            /* while(compParty.length < count){
-              async () => {
-                let cPkmn = get.pkmn(Math.floor(Math.random() * 807))
-                compParty.push(cPkmn); //May need updating if api expands.
-              }
-            } //crash loop
-            compParty = compParty.map(async(el) => await el);
-            console.log(compParty); */ //still crashes
+            return [uParty, cParty];
           });
         }
     });
