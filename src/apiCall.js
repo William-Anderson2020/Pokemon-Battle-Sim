@@ -1,8 +1,13 @@
 async function re(type, id){
-    let result = await fetch(`https://pokeapi.co/api/v2/${type}/${id}`);
-    let data = await result.json();
-    //console.log(data)
-    return data;
+    try{
+        let result = await fetch(`https://pokeapi.co/api/v2/${type}/${id}`);
+        let data = await result.json();
+        //console.log(data)
+        return data;
+    }catch(err){
+        alert(`Sorry, we didn't recognize that request`);
+        console.log(err)
+    }
 }
 
 export let get = {
