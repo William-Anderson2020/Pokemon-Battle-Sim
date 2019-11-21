@@ -1,5 +1,6 @@
 import { clickListener } from "./clickListener";
 import { get } from "./apiCall";
+import { battleInit } from "./battleInit";
 
 export function pkmnSelect() {
   let count;
@@ -30,7 +31,7 @@ export function pkmnSelect() {
           });
           clickListener('#pkmn_confirm', function(){
             form.innerHTML = '';
-            return [uParty, cParty];
+            battleInit(uParty, cParty);
           });
         }
     });
