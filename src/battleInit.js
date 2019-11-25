@@ -8,17 +8,17 @@ let typeData;
 class PKMN{
     constructor(pkmn){
         this.name = pkmn.name;
-        this.types = typeData.map(
-            el => {
+        this.types = typeData.filter(
+            (el) => {
                 let ty = pkmn.types.map(i => i.type.name);
-                let elName = el.name;
-                console.log(ty, el)
-                for(elName in ty){
+                console.log(el.name, ty)
+                if(ty.includes(el.name)){
                     return el;
-                }
+                };
             }
         );
         [this.speed, this.sDef, this.sAtk, this.Def, this.Atk, this.HP] = pkmn.stats.map(el => el.base_stat);
+        this.moves = pkmn.moves.map(el => el.move.name);
     }
 }
 
