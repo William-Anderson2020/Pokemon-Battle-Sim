@@ -12,7 +12,16 @@ async function re(type, id){
 
 export let get = {
     async pkmn(id){return await re('pokemon', id);},
-    async type(id){return await re('type', id);},
+    async type(){
+        let i;
+        let typeList = [];
+        let data = await re('type', '');
+        data.results.forEach(async (el, i) => {
+            let typeData = await re('type', el.name);
+            typeList.push(typeData);
+        });
+        return typeList;
+    },
     async move(id){return await re('move', id);},
     async item(id){return await re('item', id);}
 }
