@@ -5,7 +5,7 @@ async function re(type, id){
         //console.log(data)
         return data;
     }catch(err){
-        alert(`Sorry, we didn't recognize that request`);
+        alert(`Sorry, we didn't recognize that request.`);
         console.log(err)
     }
 }
@@ -13,7 +13,6 @@ async function re(type, id){
 export let get = {
     async pkmn(id){return await re('pokemon', id);},
     async type(){
-        let i;
         let typeList = [];
         let data = await re('type', '');
         data.results.forEach(async (el, i) => {
