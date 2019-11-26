@@ -21,7 +21,7 @@ class PKMN{
         );
         [this.speed, this.sDef, this.sAtk, this.Def, this.Atk, this.HP] = pkmn.stats.map(el => el.base_stat);
         this.moves = pkmn.moves.map(el => el.move.name);
-        this.sprites = {
+        this.sprite = {
             front: pkmn.sprites.front_default,
             back: pkmn.sprites.back_default
         }
@@ -66,6 +66,7 @@ function moveInit(uParty, cParty){
             if(i == (uParty.length)){
                 document.querySelector('.move_init_select_cont').innerHTML = '';
                 document.querySelector('.move_init_button_cont').innerHTML = '<button class="init_complete">Continue</button>';
+                clickListener('.init_complete', turnInit(uParty, cParty));
             }else{
                 moveDropdown(uParty[i]);
             }
@@ -78,6 +79,5 @@ export async function partyInit(uParty, cParty){
     uParty = uParty.map(el => new PKMN(el));
     cParty = cParty.map(el => new PKMN(el));
     moveInit(uParty, cParty); //Combinded into one since data could not keep up with demand if more than two move sets are instanciated at once
-    console.log(uParty, cParty);
-    clickListener('.init_complete', turnInit(uParty, cParty));
+    //clickListener('.init_complete', turnInit(uParty, cParty));
 }
