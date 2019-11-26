@@ -18,7 +18,18 @@ export function pkmnSelect() {
       //Party Builder
       let selection = document.querySelector(".pkmn_select_name").value.toLowerCase();
       let pkmn = await get.pkmn(selection);
-      let cPkmn = await get.pkmn(Math.floor(Math.random() * 807))
+      /* let pkmn = async function userSelection(){
+        let selection = document.querySelector(".pkmn_select_name").value.toLowerCase();
+        data = await get.pkmn(selection);
+        console.log(data);
+        if(data = undefined){
+          userSelection();
+        }
+        else{
+          return pkmn;
+        }
+      } */
+      let cPkmn = await get.pkmn(Math.round(Math.random() * 807))
       uParty.push(pkmn);
       cParty.push(cPkmn);
 
@@ -30,7 +41,6 @@ export function pkmnSelect() {
             document.querySelector('.c_sprite_holder').insertAdjacentHTML("beforeend", `<img src="${el.sprites.front_default}" class="selection_sprite">`);
           });
           clickListener('#pkmn_confirm', function(){
-            form.innerHTML = '';
             battleInit(uParty, cParty);
           });
         }

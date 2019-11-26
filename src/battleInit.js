@@ -1,4 +1,5 @@
 import { get } from './apiCall'
+import { clickListener } from './clickListener';
 
 let typeData;
 (async() => {
@@ -11,7 +12,7 @@ class PKMN{
         this.types = typeData.filter(
             (el) => {
                 let ty = pkmn.types.map(i => i.type.name);
-                console.log(el.name, ty)
+                //console.log(el.name, ty)
                 if(ty.includes(el.name)){
                     return el;
                 };
@@ -19,19 +20,62 @@ class PKMN{
         );
         [this.speed, this.sDef, this.sAtk, this.Def, this.Atk, this.HP] = pkmn.stats.map(el => el.base_stat);
         this.moves = pkmn.moves.map(el => el.move.name);
+        this.sprites = {
+            front: pkmn.sprites.front_default,
+            back: pkmn.sprites.back_default
+        }
     }
 }
 
-/* async function typeInit(pkmn){
-    let data = await pkmn.types.map(async(el) => await get.type(el));
-    then(data, () => data);
-    console.log(data);
-    return(data);
-} */
+async function resolveMoveSet(curPkmn, moveSet){
+    moveSet = moveSet.map(async (el) => {
+        let move = await get.move(el);
+        return move;
+    });
+    curPkmn.moves = [];
+    moveSet.forEach((el) => {
+        Promise.resolve(el).then(function(value){
+            curPkmn.moves.push(value);
+        });
+    });    
+}
+
+function moveInit(uParty, cParty){
+    let i = 0
+    let form = document.querySelector(".pkmn_count");
+    function moveDropdown(curPkmn){
+        form.innerHTML =  '<div class="move_init_select_cont"><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select></div><div class="move_init_button_cont"><button class="move_init_button">Continue</button></div>';
+        document.querySelectorAll('.move_init_select').forEach((el) => {
+            curPkmn.moves.forEach((curMove) => {
+                el.insertAdjacentHTML('beforeend', `<option value='${curMove}'>${curMove}</option>`)
+            });
+        });
+        clickListener('.move_init_button', () => {
+            let moveSet = [];
+            let cMoveSet = [];
+            document.querySelectorAll('.move_init_select').forEach((el) => {
+                moveSet.push(el.value);
+            });
+            while(cMoveSet.length < 4){
+                cMoveSet.push(cParty[i].moves[Math.round(Math.random()*cParty[i].moves.length)]);
+            }
+            resolveMoveSet(uParty[i], moveSet);
+            resolveMoveSet(cParty[i], cMoveSet);
+            i = i+1;
+            if(i == (uParty.length)){
+                document.querySelector('.move_init_select_cont').innerHTML = '';
+                document.querySelector('.move_init_button_cont').innerHTML = '<button class="move_init_button">Continue</button>';
+            }else{
+                moveDropdown(uParty[i]);
+            }
+        });
+    }
+    moveDropdown(uParty[i]);
+}
 
 export async function battleInit(uParty, cParty){
-    //console.log(uParty, cParty);
-    let u1 = new PKMN(uParty[0]);
-    //u1.types = await typeInit(u1);
-    console.log(u1);
+    uParty = uParty.map(el => new PKMN(el));
+    cParty = cParty.map(el => new PKMN(el));
+    moveInit(uParty, cParty);
+    console.log(uParty, cParty);
 }
