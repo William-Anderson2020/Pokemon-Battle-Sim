@@ -74,7 +74,7 @@ function moveInit(uParty, cParty){
     moveDropdown(uParty[i]);
 }
 
-export async function battleInit(uParty, cParty){
+export async function partyInit(uParty, cParty){
     uParty = uParty.map(el => new PKMN(el));
     cParty = cParty.map(el => new PKMN(el));
     moveInit(uParty, cParty); //Combinded into one since data could not keep up with demand if more than two move sets are instanciated at once

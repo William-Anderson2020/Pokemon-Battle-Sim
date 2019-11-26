@@ -1,6 +1,6 @@
 import { clickListener } from "./clickListener";
 import { get } from "./apiCall";
-import { battleInit } from "./battleInit";
+import { partyInit } from "./partyInit";
 
 export function pkmnSelect() {
   let count;
@@ -41,7 +41,7 @@ export function pkmnSelect() {
             document.querySelector('.c_sprite_holder').insertAdjacentHTML("beforeend", `<img src="${el.sprites.front_default}" class="selection_sprite">`);
           });
           clickListener('#pkmn_confirm', function(){
-            battleInit(uParty, cParty);
+            partyInit(uParty, cParty);
           });
         }
     });
