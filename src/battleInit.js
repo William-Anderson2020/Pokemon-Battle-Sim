@@ -1,5 +1,6 @@
 import { get } from './apiCall'
 import { clickListener } from './clickListener';
+import { turnInit } from './turnInit';
 
 let typeData;
 (async() => {
@@ -64,7 +65,7 @@ function moveInit(uParty, cParty){
             i = i+1;
             if(i == (uParty.length)){
                 document.querySelector('.move_init_select_cont').innerHTML = '';
-                document.querySelector('.move_init_button_cont').innerHTML = '<button class="move_init_button">Continue</button>';
+                document.querySelector('.move_init_button_cont').innerHTML = '<button class="init_complete">Continue</button>';
             }else{
                 moveDropdown(uParty[i]);
             }
@@ -76,6 +77,7 @@ function moveInit(uParty, cParty){
 export async function battleInit(uParty, cParty){
     uParty = uParty.map(el => new PKMN(el));
     cParty = cParty.map(el => new PKMN(el));
-    moveInit(uParty, cParty);
+    moveInit(uParty, cParty); //Combinded into one since data could not keep up with demand if more than two move sets are instanciated at once
     console.log(uParty, cParty);
+    clickListener('.init_complete', turnInit(uParty, cParty));
 }
