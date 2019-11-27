@@ -19,12 +19,13 @@ class PKMN{
                 };
             }
         );
-        [this.speed, this.sDef, this.sAtk, this.Def, this.Atk, this.HP] = pkmn.stats.map(el => el.base_stat);
+        [this.speed, this.sDef, this.sAtk, this.def, this.atk, this.HP] = pkmn.stats.map(el => el.base_stat);
         this.moves = pkmn.moves.map(el => el.move.name);
         this.sprite = {
             front: pkmn.sprites.front_default,
             back: pkmn.sprites.back_default
         }
+        this.curHP = this.HP;
     }
 }
 
@@ -45,7 +46,7 @@ function moveInit(uParty, cParty){
     let i = 0
     let form = document.querySelector(".pkmn_count");
     function moveDropdown(curPkmn){
-        form.innerHTML =  '<div class="move_init_select_cont"><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select></div><div class="move_init_button_cont"><button class="move_init_button">Continue</button></div>';
+        form.innerHTML =  '<div class="move_init_select_cont"><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select></div><div class="move_init_button_cont"><button class="move_init_button btn">Continue</button></div>';
         document.querySelectorAll('.move_init_select').forEach((el) => {
             curPkmn.moves.forEach((curMove) => {
                 el.insertAdjacentHTML('beforeend', `<option value='${curMove}'>${curMove}</option>`)
@@ -65,7 +66,7 @@ function moveInit(uParty, cParty){
             i = i+1;
             if(i == (uParty.length)){
                 document.querySelector('.move_init_select_cont').innerHTML = '';
-                document.querySelector('.move_init_button_cont').innerHTML = '<button class="init_complete">Continue</button>';
+                document.querySelector('.move_init_button_cont').innerHTML = '<button class="init_complete btn">Continue</button>';
                 clickListener('.init_complete', turnInit(uParty, cParty));
             }else{
                 moveDropdown(uParty[i]);

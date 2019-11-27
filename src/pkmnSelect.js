@@ -34,9 +34,9 @@ export function pkmnSelect() {
             cParty.forEach((el) => {
               document.querySelector('.c_sprite_holder').insertAdjacentHTML("beforeend", `<img src="${el.sprites.front_default}" class="selection_sprite">`);
             });
-            clickListener('#pkmn_confirm', function(){
+            clickListener('#pkmn_confirm', (() => {
               partyInit(uParty, cParty);
-            });
+            }));
           }
       }
     });

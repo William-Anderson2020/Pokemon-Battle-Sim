@@ -15,7 +15,7 @@ export function animInit() {
 
 export function typewriterInit(el, txt) {
     let i = 0;
-    let speed = 50;
+    let speed = 20;
     el.innerHTML = '';
     function typeWriter(){
     if (i < txt.length) {
@@ -43,4 +43,9 @@ export function ansSelect(el, color){
         el.style.backgroundColor = 'rgba(0,0,0,.9)'
         el.style.color = 'white'
     }, 500)
+}
+
+export function sFix(text){ //semantic fix
+    text = text.charAt(0).toUpperCase() + text.slice(1).replace('-', ' ');
+    return text;
 }
