@@ -14,6 +14,9 @@ export function turnInit(uParty, cParty){
     function buttonInit(){
         document.querySelector('.battle_button_cont').innerHTML = '<button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button>'
     
+        document.querySelector('.textbox_text').innerHTML = '';
+        document.querySelector('.textbox_next').innerHTML = '';
+        
         clickListener('.turn_button', (function(e){
             let selection = e.target.value;
             let buttonCont = document.querySelector('.battle_button_cont');
@@ -27,6 +30,7 @@ export function turnInit(uParty, cParty){
                         let uAttack = uCurPkmn.moves[at.target.value];
                         let cAttack = cCurPkmn.moves[Math.round(Math.random()*4)];
                         let messege;
+                        document.querySelector('.buttonCont').innerHTML = '';
                         function damageCalc(atTy, curAttacker, curDefender, attack){
                             let atk, def;
                             switch(atTy){
