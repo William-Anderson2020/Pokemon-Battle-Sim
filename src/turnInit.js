@@ -84,7 +84,7 @@ export function turnInit(uParty, cParty){
                             messege = `${sFix(curAttacker.name)} used ${sFix(attack.name)}. `;
                             switch(attack.target.name){
                                 case 'user':
-                                    move.stat_changes.forEach((el) => {
+                                    attack.stat_changes.forEach((el) => {
                                         switch(el.stat.name){
                                             case 'attack':
                                                 curAttacker.atk *= (1 + (el.change * .5));
@@ -217,7 +217,7 @@ export function turnInit(uParty, cParty){
                                         }else{
                                             cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                             document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
-                                            typewriterInit(document.querySelector('.textbox_text'), `Your oppoent sent out ${cCurPkmn.name}.`);
+                                            typewriterInit(document.querySelector('.textbox_text'), `Your oppoent sent out ${sFix(cCurPkmn.name)}.`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_next_pokemon"> [Next] </span>';
                                             clickListener('.textbox_opponent_next_pokemon', () => {
                                                 buttonInit();
