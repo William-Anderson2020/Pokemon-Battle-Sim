@@ -140,41 +140,65 @@ export function turnInit(uParty, cParty){
                                 alert('statRes defaulting, check logs.');
                         }
                     }
-                    //uTurnRes
-                    if(uAttack.damage_class.name == 'physical'){
-                        damageCalc('atk', uCurPkmn, cCurPkmn, uAttack);
-                    }else if(uAttack.damage_class.name == 'special'){
-                        damageCalc('sAtk', uCurPkmn, cCurPkmn, uAttack);
-                    }else if(uAttack.damage_class.name == 'status'){
-                        if(uAttack.stat_changes.length != 0){
-                            statRes(uCurPkmn, cCurPkmn, uAttack);
-                        }else{
-                            messege = `${uCurPkmn.name} used ${attack.name}, but it failed!`;
+                    function uTurnRes(){
+                        if(uAttack.damage_class.name == 'physical'){
+                            damageCalc('atk', uCurPkmn, cCurPkmn, uAttack);
+                        }else if(uAttack.damage_class.name == 'special'){
+                            damageCalc('sAtk', uCurPkmn, cCurPkmn, uAttack);
+                        }else if(uAttack.damage_class.name == 'status'){
+                            if(uAttack.stat_changes.length != 0){
+                                statRes(uCurPkmn, cCurPkmn, uAttack);
+                            }else{
+                                messege = `${uCurPkmn.name} used ${attack.name}, but it failed!`;
+                            }
                         }
+                        messege = sFix(messege);
+                        typewriterInit(document.querySelector('.textbox_text'), messege);
+                        document.querySelector('.textbox_next').innerHTML = '<span class="textbox_attack_next"> [Next] </span>';
                     }
                     
-                    messege = sFix(messege);
-                    typewriterInit(document.querySelector('.textbox_text'), messege);
-                    document.querySelector('.textbox_next').innerHTML = '<span class="textbox_attack_next"> [Next] </span>';
-
-                    clickListener('.textbox_attack_next', (() => {
-                        //cTurnRes
-                    if(cAttack.damage_class.name == 'physical'){
-                        damageCalc('atk', cCurPkmn, uCurPkmn, cAttack);
-                    }else if(cAttack.damage_class.name == 'special'){
-                        damageCalc('sAtk', cCurPkmn, uCurPkmn, cAttack);
-                    }else if(cAttack.damage_class.name == 'status'){
-                        if(cAttack.stat_changes.length != 0){
-                            statRes(cCurPkmn, uCurPkmn, cAttack);
-                        }else{
-                            messege = `${uCurPkmn.name} used ${attack.name}, but it failed!`;
+                    function cTurnRes(){
+                        if(cAttack.damage_class.name == 'physical'){
+                            damageCalc('atk', cCurPkmn, uCurPkmn, cAttack);
+                        }else if(cAttack.damage_class.name == 'special'){
+                            damageCalc('sAtk', cCurPkmn, uCurPkmn, cAttack);
+                        }else if(cAttack.damage_class.name == 'status'){
+                            if(cAttack.stat_changes.length != 0){
+                                statRes(cCurPkmn, uCurPkmn, cAttack);
+                            }else{
+                                messege = `${uCurPkmn.name} used ${attack.name}, but it failed!`;
+                            }
                         }
+                        messege = sFix(messege);
+                        typewriterInit(document.querySelector('.textbox_text'), messege);
+                        document.querySelector('.textbox_next').innerHTML = '<span class="textbox_attack_next"> [Next] </span>';
                     }
-                    messege = sFix(messege);
-                    typewriterInit(document.querySelector('.textbox_text'), messege);
-                    document.querySelector('.textbox_next').innerHTML = '<span class="textbox_attack_next"> [Next] </span>';
+
+                    if(uCurPkmn.speed >= cCurPkmn.speed){
+                        uTurnRes();
+                        if(cCurPkmn.curHP <= 0){
+                            typewriterInit(document.querySelector('.textbox_text'), `The opposing ${cCurPkmn.name} has fainted!`);
+                            document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_fainted"> [Next] </span>';
+                            clickListener('.textbox_opponent_fainted', () => {
+                                if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
+                                    typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
+                                }else{
+                                    cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
+                                    typewriterInit(document.querySelector('.textbox_text'), `Your oppoent sent out ${cCurPkmn.name}.`)
+                                }
+                            });
+                        }else{
+                            cTurnRes()
+                            if(uCurPkmn.curHP <= 0){
+
+                            }
+                        }
+                    }else{
+
+                    }
+
+
                     console.log(uCurPkmn.HP, uCurPkmn.curHP, cCurPkmn.HP, cCurPkmn.curHP);
-                    }));
                 });
                 break;
             case '1':
