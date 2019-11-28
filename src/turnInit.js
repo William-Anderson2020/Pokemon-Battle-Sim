@@ -9,7 +9,7 @@ export function turnInit(uParty, cParty){
     let cCurPkmn = cParty[0];
 
     console.log(uParty, cParty);
-    window.innerHTML = `<img class='userSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite' src="${cCurPkmn.sprite.front}"></img><div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
+    window.innerHTML = `<div class="disp ,cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><img class='userSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite' src="${cCurPkmn.sprite.front}"> <div class="disp ,uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div> </img><div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
 
     function buttonInit(){
         document.querySelector('.battle_button_cont').innerHTML = '<button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button>'
@@ -17,9 +17,10 @@ export function turnInit(uParty, cParty){
         document.querySelector('.textbox_text').innerHTML = '';
         document.querySelector('.textbox_next').innerHTML = '';
         let textbox = document.querySelector('.textbox_text');
+        let hpBarWidth = document.querySelector('.HPBar').getBoundingClientRect().width - 8;
         let messege;
 
-        function turnRes(curAttacker, curDefender, curAttack){
+        function turnRes(curAttacker, curDefender, curAttack, target){
             if(curAttack == undefined){
                 messege = `${sFix(curAttacker.name)} flailed about.`
             }else{
@@ -36,6 +37,19 @@ export function turnInit(uParty, cParty){
                     }
                 }
             }
+            let hpBar;
+            let hpRatio = (curDefender.curHP / curDefender.HP);
+            if(curDefender.curHP <= 0){
+                hpRatio = 0;
+            }
+            let width;
+            if(target == 'c'){
+                hpBar = document.querySelector('.cHPBarFill');
+            }else{
+                hpBar = document.querySelector('.uHPBarFill');
+            }
+            width = hpBar.getBoundingClientRect().width * hpRatio;
+            hpBar.style.setProperty('width', width);
             messege = sFix(messege);
             typewriterInit(document.querySelector('.textbox_text'), messege);
             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_attack_next"> [Next] </span>';
@@ -200,54 +214,9 @@ export function turnInit(uParty, cParty){
                         let cAttack = cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))];
                         let messege;
                         document.querySelector('.battle_button_cont').innerHTML = '';
-                        function uTurnRes(){
-                            if(uAttack == undefined){
-                                messege = `${sFix(uCurPkmn.name)} flailed about.`
-                            }else{
-                                let dmgClass = uAttack.damage_class.name;
-                                if(dmgClass == 'physical'){
-                                    damageCalc('atk', uCurPkmn, cCurPkmn, uAttack);
-                                }else if(dmgClass == 'special'){
-                                    damageCalc('sAtk', uCurPkmn, cCurPkmn, uAttack);
-                                }else if(dmgClass == 'status'){
-                                    if(uAttack.stat_changes.length != 0){
-                                        statRes(uCurPkmn, cCurPkmn, uAttack);
-                                    }else{
-                                        messege = `${sFix(uCurPkmn.name)} used ${sFix(uAttack.name)}, but it failed!`;
-                                    }
-                                }else{
-                                    messege = `${sFix(uCurPkmn.name)} flailed about.`
-                                }
-                            }
-                            messege = sFix(messege);
-                            typewriterInit(document.querySelector('.textbox_text'), messege);
-                            document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_attack_next"> [Next] </span>';
-                        }
-                        
-                        function cTurnRes(){
-                            if(cAttack == undefined){
-                                messege = `${sFix(cCurPkmn.name)} flailed about.`
-                            }else{
-                                let dmgClass = cAttack.damage_class.name;
-                                if(dmgClass == 'physical'){
-                                    damageCalc('atk', cCurPkmn, uCurPkmn, cAttack);
-                                }else if(dmgClass == 'special'){
-                                    damageCalc('sAtk', cCurPkmn, uCurPkmn, cAttack);
-                                }else if(dmgClass == 'status'){
-                                    if(cAttack.stat_changes.length != 0){
-                                        statRes(cCurPkmn, uCurPkmn, cAttack);
-                                    }else{
-                                        messege = `${sFix(cCurPkmn.name)} used ${sFix(cAttack.name)}, but it failed!`;
-                                    }
-                                }
-                            }
-                            messege = sFix(messege);
-                            typewriterInit(document.querySelector('.textbox_text'), messege);
-                            document.querySelector('.textbox_next').innerHTML = '<span class="textbox_comp_attack_next"> [Next] </span>';
-                        }
 
                         if(uCurPkmn.speed >= cCurPkmn.speed){
-                            turnRes(uCurPkmn, cCurPkmn, uAttack);
+                            turnRes(uCurPkmn, cCurPkmn, uAttack, 'c');
                             clickListener('.textbox_attack_next', () => {
                                 if(cCurPkmn.curHP <= 0){
                                     typewriterInit(document.querySelector('.textbox_text'), `The opposing ${cCurPkmn.name} has fainted!`);
@@ -260,11 +229,12 @@ export function turnInit(uParty, cParty){
                                             document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
                                             typewriterInit(document.querySelector('.textbox_text'), `Your opponent sent out ${sFix(cCurPkmn.name)}.`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_next_pokemon"> [Next] </span>';
+                                            document.querySelector('.cHPBarFill').style.setProperty('width', hpBarWidth* (cCurPkmn.curHP / cCurPkmn.HP));
                                             clickListener('.textbox_opponent_next_pokemon', buttonInit);
                                         }
                                     });
                                 }else{
-                                    turnRes(cCurPkmn, uCurPkmn, cAttack);
+                                    turnRes(cCurPkmn, uCurPkmn, cAttack, 'u');
                                     clickListener('.textbox_attack_next', () => {
                                         if(uCurPkmn.curHP <= 0){
                                             let uHp = uParty.map(pk => pk.curHP > 0);
@@ -278,6 +248,7 @@ export function turnInit(uParty, cParty){
                                                     let choice = el.target.value;
                                                     uCurPkmn = uParty[choice];
                                                     document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                                                    document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                                                     buttonInit();
                                                 });
                                             }
@@ -288,7 +259,7 @@ export function turnInit(uParty, cParty){
                                 }
                             })
                         }else{
-                            turnRes(cCurPkmn, uCurPkmn, cAttack);
+                            turnRes(cCurPkmn, uCurPkmn, cAttack, 'u');
                             clickListener('.textbox_attack_next', () => {
                                 if(uCurPkmn.curHP <= 0){
                                     let uHp = uParty.map(pk => pk.curHP > 0);
@@ -302,11 +273,12 @@ export function turnInit(uParty, cParty){
                                             let choice = el.target.value;
                                             uCurPkmn = uParty[choice];
                                             document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                                            document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                                             buttonInit();
                                         });
                                     }
                                 }else{
-                                    turnRes(uCurPkmn, cCurPkmn, uAttack);
+                                    turnRes(uCurPkmn, cCurPkmn, uAttack, 'c');
                                     clickListener('.textbox_attack_next', () => {
                                         if(cCurPkmn.curHP <= 0){
                                             typewriterInit(document.querySelector('.textbox_text'), `The opposing ${cCurPkmn.name} has fainted!`);
@@ -319,6 +291,7 @@ export function turnInit(uParty, cParty){
                                                     document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your opponent sent out ${sFix(cCurPkmn.name)}.`);
                                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_next_pokemon"> [Next] </span>';
+                                                    document.querySelector('.cHPBarFill').style.setProperty('width', hpBarWidth * (cCurPkmn.curHP / cCurPkmn.HP));
                                                     clickListener('.textbox_opponent_next_pokemon', buttonInit);
                                                 }
                                             })
@@ -340,9 +313,14 @@ export function turnInit(uParty, cParty){
                         let choice = el.target.value;
                         uCurPkmn = uParty[choice];
                         document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
-                        buttonInit();
-                        turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))]);
-                        clickListener('.textbox_attack_next', buttonInit);
+                        document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
+                        typewriterInit(document.querySelector('.textbox_text'), `You sent out ${sFix(uCurPkmn.name)}!`);
+                        document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_next_pokemon"> [Next] </span>';
+                        document.querySelector('.battle_button_cont').innerHTML = '';
+                        clickListener('.textbox_user_next_pokemon', () => {
+                            turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
+                            clickListener('.textbox_attack_next', buttonInit);
+                        });
                     });
                     break;
 
