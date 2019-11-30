@@ -9,7 +9,7 @@ export function turnInit(uParty, cParty){
     let cCurPkmn = cParty[0];
 
     console.log(uParty, cParty);
-    window.innerHTML = `<div class="disp ,cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><img class='userSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite' src="${cCurPkmn.sprite.front}"> <div class="disp ,uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div> </img><div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
+    window.innerHTML = `<div class="disp ,cDisp"> <div class="name, cPkmnName">${sFix(cCurPkmn.name)}</div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><img class='userSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite' src="${cCurPkmn.sprite.front}"> <div class="disp ,uDisp"> <div class="name, uPkmnName">${sFix(uCurPkmn.name)}</div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div> </img><div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
 
     function buttonInit(){
         document.querySelector('.battle_button_cont').innerHTML = '<button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button>'
@@ -219,16 +219,17 @@ export function turnInit(uParty, cParty){
                             turnRes(uCurPkmn, cCurPkmn, uAttack, 'c');
                             clickListener('.textbox_attack_next', () => {
                                 if(cCurPkmn.curHP <= 0){
-                                    typewriterInit(document.querySelector('.textbox_text'), `The opposing ${cCurPkmn.name} has fainted!`);
+                                    typewriterInit(document.querySelector('.textbox_text'), `The opposing ${sFix(cCurPkmn.name)} has fainted!`);
                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_fainted"> [Next] </span>';
                                     clickListener('.textbox_opponent_fainted', () => {
                                         if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
-                                            typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
+                                            typewriterInit(document.querySelector('.textbox_text'), `Your opponent is out of useable Pokemon. You win!`)
                                         }else{
                                             cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                             document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
                                             typewriterInit(document.querySelector('.textbox_text'), `Your opponent sent out ${sFix(cCurPkmn.name)}.`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_next_pokemon"> [Next] </span>';
+                                            document.querySelector('.cPkmnName').innerHTML = sFix(cCurPkmn.name);
                                             document.querySelector('.cHPBarFill').style.setProperty('width', hpBarWidth* (cCurPkmn.curHP / cCurPkmn.HP));
                                             clickListener('.textbox_opponent_next_pokemon', buttonInit);
                                         }
@@ -248,6 +249,7 @@ export function turnInit(uParty, cParty){
                                                     let choice = el.target.value;
                                                     uCurPkmn = uParty[choice];
                                                     document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                                                    document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                                                     document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                                                     buttonInit();
                                                 });
@@ -273,6 +275,7 @@ export function turnInit(uParty, cParty){
                                             let choice = el.target.value;
                                             uCurPkmn = uParty[choice];
                                             document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                                            document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                                             document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                                             buttonInit();
                                         });
@@ -281,14 +284,15 @@ export function turnInit(uParty, cParty){
                                     turnRes(uCurPkmn, cCurPkmn, uAttack, 'c');
                                     clickListener('.textbox_attack_next', () => {
                                         if(cCurPkmn.curHP <= 0){
-                                            typewriterInit(document.querySelector('.textbox_text'), `The opposing ${cCurPkmn.name} has fainted!`);
+                                            typewriterInit(document.querySelector('.textbox_text'), `The opposing ${sFix(cCurPkmn.name)} has fainted!`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_fainted"> [Next] </span>';
                                             clickListener('.textbox_opponent_fainted', () => {
                                                 if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
-                                                    typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
+                                                    typewriterInit(document.querySelector('.textbox_text'), `Your opponent is out of useable pokemon. You win!`)
                                                 }else{
                                                     cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                                     document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
+                                                    document.querySelector('.cPkmnName').innerHTML = sFix(cCurPkmn.name);
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your opponent sent out ${sFix(cCurPkmn.name)}.`);
                                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_next_pokemon"> [Next] </span>';
                                                     document.querySelector('.cHPBarFill').style.setProperty('width', hpBarWidth * (cCurPkmn.curHP / cCurPkmn.HP));
@@ -313,6 +317,7 @@ export function turnInit(uParty, cParty){
                         let choice = el.target.value;
                         uCurPkmn = uParty[choice];
                         document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                        document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                         document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                         typewriterInit(document.querySelector('.textbox_text'), `You sent out ${sFix(uCurPkmn.name)}!`);
                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_next_pokemon"> [Next] </span>';
