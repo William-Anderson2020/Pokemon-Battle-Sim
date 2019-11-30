@@ -1,19 +1,26 @@
-export async function apiCall(type, val){
-    let result = await fetch(`https://pokeapi.co/api/v2/${type}/${val}`);
-    let data = await result.json();
-    return data;
-}
-
 async function re(type, id){
-    let result = await fetch(`https://pokeapi.co/api/v2/${type}/${id}`);
-    let data = await result.json();
-    console.log(data)
-    return data;
+    try{
+        let result = await fetch(`https://pokeapi.co/api/v2/${type}/${id}`);
+        let data = await result.json();
+        //console.log(data)
+        return data;
+    }catch(err){
+        alert(`Sorry, we didn't recognize that request.`);
+        console.log(err)
+    }
 }
 
 export let get = {
-    pkmn(id){re('pokemon', id)},
-    type(id){re('type', id)},
-    move(id){re('move', id)},
-    item(id){re('item', id)}
+    async pkmn(id){return await re('pokemon', id);},
+    async type(){
+        let typeList = [];
+        let data = await re('type', '');
+        data.results.forEach(async (el, i) => {
+            let typeData = await re('type', el.name);
+            typeList.push(typeData);
+        });
+        return typeList;
+    },
+    async move(id){return await re('move', id);},
+    async item(id){return await re('item', id);}
 }

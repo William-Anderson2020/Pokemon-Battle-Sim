@@ -1,0 +1,21 @@
+html{
+    font-family: 'Press Start 2P', cursive;
+    font-size: 62.5%;
+}
+button{
+    font-family: 'Press Start 2P', cursive;
+}
+
+.HPBar{
+    width: 7rem;
+    height: 1.5rem;
+    background-color: grey;
+    border: .4rem solid black;
+}
+
+.HPBarFill{
+    width: inherit;
+    height: inherit;
+    background-color: green;
+    transition: .5s;
+}
