@@ -4,15 +4,14 @@ import { partyInit } from "./partyInit";
 
 export function pkmnSelect() {
   let count;
-  let form = document.querySelector(".pkmn_count");
+  let form = document.querySelector(".window");
   let uParty = [];
   let cParty = [];
   clickListener(".pkmn_count_submit", function() {
     
     count = document.querySelector('input[name="pkmn_count"]:checked').value;
     console.log(count);
-    form.innerHTML = "";
-    form.innerHTML = `<div class="pkmn_select"> <input class="pkmn_select_name "type="text" value="Name a Pokemon" onfocus="this.value = ''"> <input type="submit" class="pkmn_select_submit"> </div> <div class="selection_sprite_holder"> </div> <div class="selection_VS"> </div> <div class="c_sprite_holder"> </div> </div>`;
+    form.innerHTML = `<div class="pkmn_select_cont"><div class="pkmn_select"> <input class="pkmn_select_name "type="text" value="Name a Pokemon" onfocus="this.value = ''"> <input type="submit" class="pkmn_select_submit"> </div> <div class="selection_sprite_holder"> </div> <div class="selection_VS"> </div> <div class="c_sprite_holder"> </div> </div></div>`;
     
     clickListener(".pkmn_select_submit", async function partyBuild() {
       //Party Builder
