@@ -65,9 +65,7 @@ function moveInit(uParty, cParty){
             resolveMoveSet(cParty[i], cMoveSet);
             i = i+1;
             if(i == (uParty.length)){
-                document.querySelector('.move_init_select_cont').innerHTML = '';
-                document.querySelector('.move_init_button_cont').innerHTML = '<button class="init_complete btn">Continue</button>';
-                clickListener('.init_complete', turnInit(uParty, cParty));
+                turnInit(uParty, cParty);
             }else{
                 moveDropdown(uParty[i]);
             }
