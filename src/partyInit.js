@@ -46,7 +46,7 @@ function moveInit(uParty, cParty){
     let i = 0
     let form = document.querySelector(".window");
     function moveDropdown(curPkmn){
-        form.innerHTML =  '<div class="move_init_select_cont"><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select></div><div class="move_init_button_cont"><button class="move_init_button btn">Continue</button></div>';
+        form.innerHTML =  '<div class="move_init_select_cont"><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select><select class="move_init_select"></select><div class="move_init_button_cont"><button class="move_init_button btn">Continue</button></div></div>';
         document.querySelectorAll('.move_init_select').forEach((el) => {
             curPkmn.moves.forEach((curMove) => {
                 el.insertAdjacentHTML('beforeend', `<option value='${curMove}'>${curMove}</option>`)

@@ -53,19 +53,46 @@ body{
 }
 
 .selection_sprite{
-    width: 30vw;
+    width: 20vw;
+}
+
+.pkmn_select{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.pkmn_select_name{
+    font-family: 'Press Start 2P', cursive;
+    font-size: 3vw;
+    width: 50vw;
 }
 
 .pkmn_select_cont{
     border-radius: 2rem;
     width: 60vw;
-    height: 80vh;
+    height: 60vh;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
 }
+
+.move_init_select_cont{
+    border-radius: 2rem;
+    width: 60vw;
+    height: 60vh;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
 
 .HPBar{
     width: 7rem;
@@ -87,7 +114,17 @@ body{
     font-size: 2rem;
     background-color: white;
     padding: 1rem;
-    border: 10px, solid, black;
+    border: 2vw, solid, black;
 }
 
-
+.battle_cont{
+    border-radius: 2rem;
+    width: 60vw;
+    height: 60vh;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
