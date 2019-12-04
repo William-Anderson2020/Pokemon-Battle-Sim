@@ -16,7 +16,7 @@ export function pkmnSelect() {
     clickListener(".pkmn_select_submit", async function partyBuild() {
       //Party Builder
       let selection = document.querySelector(".pkmn_select_name").value.toLowerCase();
-      if(selection != ''){
+      if(selection.replace(/ /g, '').length != 0){
 
       
         let data = await get.pkmn(selection);

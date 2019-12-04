@@ -72,7 +72,7 @@ body{
 .pkmn_select_cont{
     border-radius: 2rem;
     width: 60vw;
-    height: 60vh;
+    height: 40vh;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 1rem;
     display: flex;
@@ -118,12 +118,16 @@ body{
     border-color: black;
     border-width: 1rem;
     border-top-width: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .battle_cont{
     width: 80vw;
-    height: 60vh;
-    background-color: rgba(255, 255, 255, 1);
+    height: 40vh;
+    background-color: red;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -133,4 +137,23 @@ body{
     border-color: black;
     border-width: 1rem;
     border-bottom-width: .5rem;
+}
+
+.disp{
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    padding: .5rem;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.cDisp{
+    align-items: flex-end;
+    clip-path: polygon(60% 0, 100% 0%, 100% 100%, 70% 100%, 60% 40%)
+}
+
+.uDisp{
+    align-items: flex-start;
+    clip-path: polygon(0 0, 40% 0%, 40% 50%, 30% 100%, 0% 100%)
 }
