@@ -8,7 +8,7 @@ export function pkmnSwitch(curPkmn, curParty){
     nextBox.innerHTML = '';
     curParty.forEach(el => {
         console.log(el.curHP);
-        let bString = `<button class="pkmn_switch_button %active% " value="${curParty.indexOf(el)}"> <img src=${el.sprite.front}> ${sFix(el.name)}</button>`
+        let bString = `<button class="pkmn_switch_button %active% " value="${curParty.indexOf(el)}"> <img src=${el.sprite.front}> ${sFix(el.name)} ${el.curHP}/${el.HP}</button>`
         if(el.curHP <= 0){
             bString = bString.replace('%active%', 'pkmn_switch_button_inactive');
         }else{

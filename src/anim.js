@@ -1,18 +1,3 @@
-export function animInit() {
-    document.querySelectorAll('.trivia_answer_choice').forEach(el => {
-        el.addEventListener('mouseover', el => {
-            el.target.style.transform = 'scale(1.1, 1.1)';
-            el.target.style.transition = '.5s';
-        });
-    });
-    document.querySelectorAll('.trivia_answer_choice').forEach(el => {
-        el.addEventListener('mouseout', el => {
-            el.target.style.transform = 'scale(1, 1)';
-            el.target.style.transition = '.5s';
-        });
-    });
-}
-
 export function typewriterInit(el, txt) {
     let i = 0;
     let speed = 20;
@@ -48,4 +33,25 @@ export function ansSelect(el, color){
 export function sFix(text){ //semantic fix
     text = text.charAt(0).toUpperCase() + text.slice(1).replace('-', ' ');
     return text;
+}
+
+export function barCheck(target, curPkmn){
+    let hpFrac = curPkmn.curHP / curPkmn.HP;
+    let color, el;
+
+    if(target == 'u'){
+        el = document.querySelector('.uHPBarFill');
+    }else{
+        el = document.querySelector('.cHPBarFill');
+    }
+
+    if(hpFrac >= .5){
+        color = 'green';
+    }else if(hpFrac >= .25){
+        color = 'yellow';
+    }else{
+        color = 'red';
+    }
+    
+    el.style.backgroundColor = color;
 }

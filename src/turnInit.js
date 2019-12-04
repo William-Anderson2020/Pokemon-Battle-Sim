@@ -1,5 +1,5 @@
 import { clickListener } from "./clickListener";
-import { typewriterInit, sFix } from "./anim"
+import { typewriterInit, sFix, barCheck } from "./anim"
 import { pkmnSwitch } from "./pkmnSwitch";
 
 export function turnInit(uParty, cParty){
@@ -19,7 +19,7 @@ export function turnInit(uParty, cParty){
 
         document.querySelector('.textbox_text').innerHTML = '';
         document.querySelector('.textbox_next').innerHTML = '';
-        let textbox = document.querySelector('.textbox_text');
+        
         let hpBarWidth = document.querySelector('.HPBar').getBoundingClientRect().width - 8;
         let messege;
 
@@ -54,8 +54,10 @@ export function turnInit(uParty, cParty){
             let width;
             if(target == 'c'){
                 hpBar = document.querySelector('.cHPBarFill');
+                barCheck('c', cCurPkmn);
             }else{
                 hpBar = document.querySelector('.uHPBarFill');
+                barCheck('u', uCurPkmn);
             }
             width = hpBar.getBoundingClientRect().width * hpRatio;
             hpBar.style.setProperty('width', width);
@@ -145,6 +147,7 @@ export function turnInit(uParty, cParty){
                                 break;
                             default:
                                 messege += `But it failed... `;
+                                break;
                         }
                     });
                     break;
@@ -152,27 +155,28 @@ export function turnInit(uParty, cParty){
                     attack.stat_changes.forEach((el) => {
                         switch(el.stat.name){
                             case 'attack':
-                                curDefender.atk *= (1 + (el.change * (1/3)));
+                                curDefender.atk *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s attack fell! `;
                                 break;
                             case 'defense':
-                                curDefender.def *= (1 + (el.change * (1/3)));
+                                curDefender.def *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s defense fell! `;
                                 break;
                             case 'special-attack':
-                                curDefender.sAtk *= (1 + (el.change * (1/3)));
+                                curDefender.sAtk *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s special attack fell! `;
                                 break;
                             case 'special-defense':
-                                curDefender.sDef *= (1 + (el.change * (1/3)));
+                                curDefender.sDef *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s special defense fell! `;
                                 break;
                             case 'speed':
-                                curDefender.speed *= (1 + (el.change * (1/3)));
+                                curDefender.speed *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s speed fell! `;
                                 break;
                             default:
                                 messege += `But it failed... `;
+                                break;
                         }
                     });
                     break;
@@ -180,32 +184,34 @@ export function turnInit(uParty, cParty){
                     attack.stat_changes.forEach((el) => {
                         switch(el.stat.name){
                             case 'attack':
-                                curDefender.atk *= (1 + (el.change * (1/3)));
+                                curDefender.atk *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s attack fell! `;
                                 break;
                             case 'defense':
-                                curDefender.def *= (1 + (el.change * (1/3)));
+                                curDefender.def *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s defense fell! `;
                                 break;
                             case 'special-attack':
-                                curDefender.sAtk *= (1 + (el.change * (1/3)));
+                                curDefender.sAtk *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s special attack fell! `;
                                 break;
                             case 'special-defense':
-                                curDefender.sDef *= (1 + (el.change * (1/3)));
+                                curDefender.sDef *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s special defense fell! `;
                                 break;
                             case 'speed':
-                                curDefender.speed *= (1 + (el.change * (1/3)));
+                                curDefender.speed *= (1 - (el.change * (1/3)));
                                 messege += `${sFix(curDefender.name)}'s speed fell! `;
                                 break;
                             default:
                                 messege += `But it failed... `;
+                                break;
                         }
                     });
                     break;
                 default:
                     alert('statRes defaulting, check logs.');
+                    break;
             }
         }
         
@@ -232,7 +238,8 @@ export function turnInit(uParty, cParty){
                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_fainted"> [Next] </span>';
                                     clickListener('.textbox_opponent_fainted', () => {
                                         if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
-                                            typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
+                                            typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`);
+                                            document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                         }else{
                                             cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                             document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
@@ -251,6 +258,7 @@ export function turnInit(uParty, cParty){
                                             console.log(uHp);
                                             if(uHp.includes(true) == false){
                                                 typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
+                                                document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                             }else{
                                                 typewriterInit(document.querySelector('.textbox_text'), (`${sFix(uCurPkmn.name)} has fainted. Choose your next Pokemon.`));
                                                 pkmnSwitch(uCurPkmn, uParty);
@@ -277,6 +285,7 @@ export function turnInit(uParty, cParty){
                                     console.log(uHp);
                                     if(uHp.includes(true) == false){
                                         typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
+                                        document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                     }else{
                                         typewriterInit(document.querySelector('.textbox_text'), (`${sFix(uCurPkmn.name)} has fainted. Choose your next Pokemon.`));
                                         pkmnSwitch(uCurPkmn, uParty);
@@ -298,6 +307,7 @@ export function turnInit(uParty, cParty){
                                             clickListener('.textbox_opponent_fainted', () => {
                                                 if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
+                                                    document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                                 }else{
                                                     cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                                     document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
@@ -327,6 +337,7 @@ export function turnInit(uParty, cParty){
                         uCurPkmn = uParty[choice];
                         document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
                         document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
+                        barCheck('u', uCurPkmn);
                         document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                         typewriterInit(document.querySelector('.textbox_text'), `You sent out ${sFix(uCurPkmn.name)}!`);
                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_next_pokemon"> [Next] </span>';
