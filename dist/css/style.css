@@ -157,3 +157,21 @@ body{
     align-items: flex-start;
     clip-path: polygon(0 0, 40% 0%, 40% 50%, 30% 100%, 0% 100%)
 }
+
+.battle_button_cont{
+    width: inherit;
+    height: 25vh;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: .5rem;
+}
+
+.attack_button{
+    width: 35vw;
+    height: 10vh;
+}
+
+.turn_button{
+    height: 3rem;
+}

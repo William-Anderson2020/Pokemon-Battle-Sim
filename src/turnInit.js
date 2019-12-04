@@ -9,10 +9,10 @@ export function turnInit(uParty, cParty){
     let cCurPkmn = cParty[0];
 
     console.log(uParty, cParty);
-    window.innerHTML = `<div class="battle_cont"><div class="disp cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><div class="battle_sprite_cont"><img class='userSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite' src="${cCurPkmn.sprite.front}"></div> <div class="disp uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div>  </div> <div class="textbox"> <div class="textbox_text"></div> <div class="textbox_next"></div> </div> <div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button_DISABLED btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
+    window.innerHTML = `<div class="battle_cont"><div class="disp cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><div class="battle_sprite_cont"><img class='userSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite' src="${cCurPkmn.sprite.front}"></div> <div class="disp uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div>  </div> <div class="textbox"> <div class="textbox_text"></div> <div class="textbox_next"></div> </div> <div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
 
     function buttonInit(){
-        document.querySelector('.battle_button_cont').innerHTML = '<button class="turn_button btn" value="0">Attack</button><button class="turn_button_DISABLED btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button>'
+        document.querySelector('.battle_button_cont').innerHTML = '<button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button>'
     
         document.querySelector('.cPkmnName').innerHTML = sFix(cCurPkmn.name);
         document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
@@ -33,7 +33,13 @@ export function turnInit(uParty, cParty){
                 }else if(dmgClass == 'special'){
                     damageCalc('sAtk', curAttacker, curDefender, curAttack);
                 }else if(dmgClass == 'status'){
-                    if(curAttack.stat_changes.length != 0){
+                    if(curAttack.name == 'transform'){
+                        uCurPkmn = cCurPkmn;
+                        document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                        document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
+                        document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
+                        messege = `Ditto transformed into ${sFix(uCurPkmn.name)}!`;
+                    }else if(curAttack.stat_changes.length != 0){
                         statRes(curAttacker, curDefender, curAttack);
                     }else{
                         messege = `${sFix(curAttacker.name)} used ${sFix(curAttack.name)}, but it failed!`;
@@ -287,7 +293,7 @@ export function turnInit(uParty, cParty){
                                     turnRes(uCurPkmn, cCurPkmn, uAttack, 'c');
                                     clickListener('.textbox_attack_next', () => {
                                         if(cCurPkmn.curHP <= 0){
-                                            typewriterInit(document.querySelector('.textbox_text'), `The opposing ${cCurPkmn.name} has fainted!`);
+                                            typewriterInit(document.querySelector('.textbox_text'), `The opposing ${sFix(cCurPkmn.name)} has fainted!`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_fainted"> [Next] </span>';
                                             clickListener('.textbox_opponent_fainted', () => {
                                                 if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
