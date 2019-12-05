@@ -225,7 +225,7 @@ export function turnInit(uParty, cParty){
                 if(el.curHP <= 0){
                     el.curHP = 0;
                 }
-                let bString = `<button class="pkmn_switch_button %active% " value="${curParty.indexOf(el)}"> <img src=${el.sprite.front}> <div class="pkmn_switch_button_stats">${sFix(el.name)} ${Math.round(el.curHP)}/${el.HP}</div></button>`
+                let bString = `<button class="pkmn_switch_button %active% " value="${curParty.indexOf(el)}"> <img src=${el.sprite.front}> ${sFix(el.name)} ${Math.round(el.curHP)}/${el.HP}</button>`
                 if(el.curHP <= 0){
                     bString = bString.replace('%active%', 'pkmn_switch_button_inactive');
                 }else{
@@ -249,6 +249,7 @@ export function turnInit(uParty, cParty){
                 });
                 clickListener('.pkmn_switch_button_active', (el) => {
                     let choice = el.target.value;
+                    console.log(choice);
                     if(uCurPkmn != uParty[choice]){
                         uCurPkmn = uParty[choice];
                         console.log(uCurPkmn, uParty, choice);
