@@ -199,6 +199,7 @@ body{
     height: 20vh;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .pkmn_switch_button_stats{
