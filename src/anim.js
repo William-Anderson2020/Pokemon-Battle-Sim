@@ -48,9 +48,9 @@ export function barCheck(target, curPkmn){
     if(hpFrac >= .5){
         color = 'green';
     }else if(hpFrac >= .25){
-        color = 'yellow';
+        color = '#FFDE00';
     }else{
-        color = 'red';
+        color = '#CC0000';
     }
     
     el.style.backgroundColor = color;
