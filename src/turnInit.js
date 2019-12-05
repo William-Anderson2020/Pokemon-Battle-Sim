@@ -334,18 +334,22 @@ export function turnInit(uParty, cParty){
                     pkmnSwitch(uCurPkmn, uParty);
                     clickListener('.pkmn_switch_button_active', (el) => {
                         let choice = el.target.value;
-                        uCurPkmn = uParty[choice];
-                        document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
-                        document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
-                        barCheck('u', uCurPkmn);
-                        document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
-                        typewriterInit(document.querySelector('.textbox_text'), `You sent out ${sFix(uCurPkmn.name)}!`);
-                        document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_next_pokemon"> [Next] </span>';
-                        document.querySelector('.battle_button_cont').innerHTML = '';
-                        clickListener('.textbox_user_next_pokemon', () => {
-                            turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
-                            clickListener('.textbox_attack_next', buttonInit);
-                        });
+                        if(uCurPkmn != uParty[choice]){
+                            uCurPkmn = uParty[choice]
+                            document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                            document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
+                            barCheck('u', uCurPkmn);
+                            document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
+                            typewriterInit(document.querySelector('.textbox_text'), `You sent out ${sFix(uCurPkmn.name)}!`);
+                            document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_next_pokemon"> [Next] </span>';
+                            document.querySelector('.battle_button_cont').innerHTML = '';
+                            clickListener('.textbox_user_next_pokemon', () => {
+                                turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
+                                clickListener('.textbox_attack_next', buttonInit);
+                            });
+                        }else{
+                            buttonInit();
+                        }
                     });
                     break;
 
