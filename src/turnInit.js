@@ -46,6 +46,7 @@ export function turnInit(uParty, cParty){
                 }
             }
             let hpBar;
+            curDefender.curHP = Math.round(curDefender.curHP);
             let hpRatio = (curDefender.curHP / curDefender.HP);
             if(curDefender.curHP <= 0){
                 hpRatio = 0;
