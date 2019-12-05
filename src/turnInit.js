@@ -1,6 +1,5 @@
 import { clickListener } from "./clickListener";
 import { typewriterInit, sFix, barCheck } from "./anim"
-import { pkmnSwitch } from "./pkmnSwitch";
 
 export function turnInit(uParty, cParty){
     let window = document.querySelector('.window');
@@ -214,6 +213,78 @@ export function turnInit(uParty, cParty){
                     break;
             }
         }
+
+        function pkmnSwitch(curPkmn, curParty){
+            document.querySelector('.battle_button_cont').innerHTML = `<div class="switch_button_cont"></div><div class="select_switch_cont"><div class="select_back select_switch"><</div><div class="select_next select_switch">></div></div>`;
+            let textBox = document.querySelector('.textbox_text');
+            let nextBox = document.querySelector('.textbox_next');
+            let bCont = document.querySelector('.switch_button_cont');
+            let bArray = [];
+            nextBox.innerHTML = '';
+            curParty.forEach(el => {
+                if(el.curHP <= 0){
+                    el.curHP = 0;
+                }
+                let bString = `<button class="pkmn_switch_button %active% " value="${curParty.indexOf(el)}"> <img src=${el.sprite.front}> <div class="pkmn_switch_button_stats">${sFix(el.name)} ${Math.round(el.curHP)}/${el.HP}</div></button>`
+                if(el.curHP <= 0){
+                    bString = bString.replace('%active%', 'pkmn_switch_button_inactive');
+                }else{
+                    bString = bString.replace('%active%', 'pkmn_switch_button_active');
+                }
+                bArray.push(bString);
+            })
+            let count = 0;
+            let countCap = (bArray.length - 1)
+        
+            function changeDisp(){
+                if(count > countCap){
+                    count = 0;
+                }else if(count < 0){
+                    count = countCap;
+                }
+                bCont.innerHTML = bArray[count];
+                clickListener('.pkmn_switch_button_inactive', (el) => {
+                    let pkmn = curParty[el.target.value];
+                    typewriterInit(textBox, (`${sFix(pkmn.name)} is unable to fight.`));
+                });
+                clickListener('.pkmn_switch_button_active', (el) => {
+                    let choice = el.target.value;
+                    if(uCurPkmn != uParty[choice]){
+                        uCurPkmn = uParty[choice];
+                        console.log(uCurPkmn, uParty, choice);
+                        document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
+                        document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
+                        barCheck('u', uCurPkmn);
+                        document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
+                        typewriterInit(document.querySelector('.textbox_text'), `You sent out ${sFix(uCurPkmn.name)}!`);
+                        document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_next_pokemon"> [Next] </span>';
+                        document.querySelector('.battle_button_cont').innerHTML = '';
+                        clickListener('.textbox_user_next_pokemon', () => {
+                            turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
+                            clickListener('.textbox_attack_next', buttonInit);
+                        });
+                    }else{
+                        buttonInit();
+                    }
+                });
+            }
+            changeDisp();
+        
+            clickListener('.select_back', () => {
+                count--;
+                changeDisp();
+            })
+        
+            clickListener('.select_next', () => {
+                count++;
+                changeDisp();
+            });
+        
+            clickListener('.pkmn_switch_button_inactive', (el) => {
+                let pkmn = curParty[el.target.value];
+                typewriterInit(textBox, (`${sFix(pkmn.name)} is unable to fight.`));
+            });
+        }
         
         clickListener('.turn_button', (function(e){
             let selection = e.target.value;
@@ -234,7 +305,7 @@ export function turnInit(uParty, cParty){
                             turnRes(uCurPkmn, cCurPkmn, uAttack, 'c');
                             clickListener('.textbox_attack_next', () => {
                                 if(cCurPkmn.curHP <= 0){
-                                    typewriterInit(document.querySelector('.textbox_text'), `The opposing ${cCurPkmn.name} has fainted!`);
+                                    typewriterInit(document.querySelector('.textbox_text'), `The opposing ${sFix(cCurPkmn.name)} has fainted!`);
                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_fainted"> [Next] </span>';
                                     clickListener('.textbox_opponent_fainted', () => {
                                         if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
@@ -247,6 +318,7 @@ export function turnInit(uParty, cParty){
                                             typewriterInit(document.querySelector('.textbox_text'), `Your opponent sent out ${sFix(cCurPkmn.name)}.`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_next_pokemon"> [Next] </span>';
                                             document.querySelector('.cHPBarFill').style.setProperty('width', hpBarWidth* (cCurPkmn.curHP / cCurPkmn.HP));
+                                            barCheck('c', cCurPkmn);
                                             clickListener('.textbox_opponent_next_pokemon', buttonInit);
                                         }
                                     });
@@ -268,6 +340,7 @@ export function turnInit(uParty, cParty){
                                                     document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
                                                     document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                                                     document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
+                                                    barCheck('u', uCurPkmn);
                                                     buttonInit();
                                                 });
                                             }
@@ -295,6 +368,7 @@ export function turnInit(uParty, cParty){
                                             document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
                                             document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                                             document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
+                                            barCheck('u', uCurPkmn);
                                             buttonInit();
                                         });
                                     }
@@ -315,6 +389,7 @@ export function turnInit(uParty, cParty){
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your opponent sent out ${sFix(cCurPkmn.name)}.`);
                                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_opponent_next_pokemon"> [Next] </span>';
                                                     document.querySelector('.cHPBarFill').style.setProperty('width', hpBarWidth * (cCurPkmn.curHP / cCurPkmn.HP));
+                                                    barCheck('c', cCurPkmn);
                                                     clickListener('.textbox_opponent_next_pokemon', buttonInit);
                                                 }
                                             })
@@ -332,25 +407,6 @@ export function turnInit(uParty, cParty){
                     break;
                 case '2':
                     pkmnSwitch(uCurPkmn, uParty);
-                    clickListener('.pkmn_switch_button_active', (el) => {
-                        let choice = el.target.value;
-                        if(uCurPkmn != uParty[choice]){
-                            uCurPkmn = uParty[choice]
-                            document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
-                            document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
-                            barCheck('u', uCurPkmn);
-                            document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
-                            typewriterInit(document.querySelector('.textbox_text'), `You sent out ${sFix(uCurPkmn.name)}!`);
-                            document.querySelector('.textbox_next').innerHTML = '<span class="textbox_user_next_pokemon"> [Next] </span>';
-                            document.querySelector('.battle_button_cont').innerHTML = '';
-                            clickListener('.textbox_user_next_pokemon', () => {
-                                turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
-                                clickListener('.textbox_attack_next', buttonInit);
-                            });
-                        }else{
-                            buttonInit();
-                        }
-                    });
                     break;
 
                 default:

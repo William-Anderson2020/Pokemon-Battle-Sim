@@ -22,7 +22,7 @@ import { clickListener } from "./clickListener";
     })
 } */
 
-export function pkmnSwitch(curPkmn, curParty){
+function pkmnSwitch(curPkmn, curParty){
     document.querySelector('.battle_button_cont').innerHTML = `<div class="switch_button_cont"></div><div class="select_switch_cont"><div class="select_back select_switch"><</div><div class="select_next select_switch">></div></div>`;
     let textBox = document.querySelector('.textbox_text');
     let nextBox = document.querySelector('.textbox_next');

@@ -196,10 +196,21 @@ body{
 
 .pkmn_switch_button{
     width: 80vw;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
 }
+
+.pkmn_switch_button_stats{
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+    justify-content: space-around;
+}
+
 .select_switch{
     padding: .5rem;
-    font-size: 2rem;
+    font-size: 1rem;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 5rem;
 }
