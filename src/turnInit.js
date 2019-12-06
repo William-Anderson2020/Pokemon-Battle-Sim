@@ -7,6 +7,9 @@ export function turnInit(uParty, cParty){
     let uCurPkmn = uParty[0];
     let cCurPkmn = cParty[0];
 
+    let potion = get.item('potion');
+    let potionCount = 5;
+
     console.log(uParty, cParty);
     window.innerHTML = `<div class="battle_cont"><div class="disp cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><div class="battle_sprite_cont"><img class='userSprite battleSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite battleSprite' src="${cCurPkmn.sprite.front}"></div> <div class="disp uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div>  </div> <div class="textbox"> <div class="textbox_text"></div> <div class="textbox_next"></div> </div> <div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
 
@@ -321,6 +324,25 @@ export function turnInit(uParty, cParty){
             clickListener('.pkmn_switch_button_inactive', (el) => {
                 let pkmn = curParty[el.target.value];
                 typewriterInit(textBox, (`${sFix(pkmn.name)} is unable to fight.`));
+            });
+        }
+
+        function potionUse(){
+            document.querySelector('.battle_button_cont').innerHTML = `<button class="potion"><img src="${potion.sprites.default}"> Heal 20 HP on your current Pkmn.</button>`;
+            clickListener('.potion', () => {
+                if (uCurPkmn.curHP <= 0){
+                    messege = `${sFix(uCurPkmn.name)} has fainted and can't be healed.`;
+                }else if(uCurPkmn.curHP == uCurPkmn.HP){
+                    messege = `${sFix(uCurPkmn.name)} is already fully healed.`
+                }else{
+                    uCurPkmn.curHP += 20;
+                    if(uCurPkmn.curHP > uCurPkmn.HP){
+                        uCurPkmn.curHP = uCurPkmn.HP;
+                    }
+                }
+                hpBar = document.querySelector('.uHPBarFill'); 
+                
+                barCheck('u', uCurPkmn);
             });
         }
         
