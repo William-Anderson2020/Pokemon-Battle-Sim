@@ -8,7 +8,7 @@ export function turnInit(uParty, cParty){
     let cCurPkmn = cParty[0];
 
     console.log(uParty, cParty);
-    window.innerHTML = `<div class="battle_cont"><div class="disp cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><div class="battle_sprite_cont"><img class='userSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite' src="${cCurPkmn.sprite.front}"></div> <div class="disp uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div>  </div> <div class="textbox"> <div class="textbox_text"></div> <div class="textbox_next"></div> </div> <div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
+    window.innerHTML = `<div class="battle_cont"><div class="disp cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><div class="battle_sprite_cont"><img class='userSprite battleSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite battleSprite' src="${cCurPkmn.sprite.front}"></div> <div class="disp uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div>  </div> <div class="textbox"> <div class="textbox_text"></div> <div class="textbox_next"></div> </div> <div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
 
     function buttonInit(){
         document.querySelector('.battle_button_cont').innerHTML = '<button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button>'
@@ -252,7 +252,7 @@ export function turnInit(uParty, cParty){
         }
 
         function pkmnSwitch(curPkmn, curParty){
-            document.querySelector('.battle_button_cont').innerHTML = `<div class="switch_button_cont"></div><div class="select_switch_cont"><div class="select_back select_switch"><</div><div class="select_next select_switch">></div></div>`;
+            document.querySelector('.battle_button_cont').innerHTML = `<div class="switch_cont"><div class="switch_button_cont"></div><div class="select_switch_cont"><div class="select_back select_switch"><</div><div class="select_next select_switch">></div></div></div>`;
             let textBox = document.querySelector('.textbox_text');
             let nextBox = document.querySelector('.textbox_next');
             let bCont = document.querySelector('.switch_button_cont');

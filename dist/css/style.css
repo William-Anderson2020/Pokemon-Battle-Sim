@@ -4,6 +4,10 @@ html{
     background-image: url('./bg_transparent.svg'), url('bg_square.svg');
     background-position: 50%, 0;
 }
+@media only screen and (min-width: 900px){
+    
+}
+
 button{
     font-family: 'Press Start 2P', cursive;
     border-radius: 2rem;
@@ -19,8 +23,8 @@ body{
 }
 
 .header{
-    width: 90vw;
-    font-size: 7vw;
+    width: 28.8rem;
+    font-size: 2.24rem;
     background-color: rgba(255, 255, 255, 0.7);
     text-align: center;
     border-radius: 2rem;
@@ -34,7 +38,7 @@ body{
     align-items: center;
     justify-content: space-around;
     height: 30rem;
-    width: 60vw;
+    width: 19.2rem;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 2rem;
     padding: 1rem;
@@ -48,12 +52,12 @@ body{
 }
 
 .pkmn_count_submit{
-    font-size: 5vw;
+    font-size: 1.6rem;
     padding: 2rem;
 }
 
 .selection_sprite{
-    width: 20vw;
+    width: 6.4rem;
 }
 
 .pkmn_select{
@@ -65,14 +69,14 @@ body{
 
 .pkmn_select_name{
     font-family: 'Press Start 2P', cursive;
-    font-size: 3vw;
-    width: 50vw;
+    font-size: .96rem;
+    width: 16rem;
 }
 
 .pkmn_select_cont{
     border-radius: 2rem;
-    width: 60vw;
-    height: 40vh;
+    width: 19.2rem;
+    height: 30rem;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 1rem;
     display: flex;
@@ -83,8 +87,8 @@ body{
 
 .move_init_select_cont{
     border-radius: 2rem;
-    width: 60vw;
-    height: 60vh;
+    width: 19.2rem;
+    height: 34.08rem;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 1rem;
     display: flex;
@@ -109,8 +113,8 @@ body{
 }
 
 .textbox{
-    width: 80vw;
-    height: 8vh;
+    width: 25.6rem;
+    height: 4.544rem;
     font-size: 1.2rem;
     background-color: white;
     padding: 1rem;
@@ -125,8 +129,8 @@ body{
 }
 
 .battle_cont{
-    width: 80vw;
-    height: 40vh;
+    width: 25.6rem;
+    height: 22.72rem;
     background-image: url('./bg_battle.jpg');
     background-size: cover;
     background-position: center;
@@ -162,7 +166,7 @@ body{
 
 .battle_button_cont{
     width: inherit;
-    height: 25vh;
+    height: 14.2rem;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -170,8 +174,8 @@ body{
 }
 
 .attack_button{
-    width: 35vw;
-    height: 10vh;
+    width: 11.2rem;
+    height: 5.68rem;
     overflow-wrap: break-word;
 }
 
@@ -195,8 +199,8 @@ body{
 }
 
 .pkmn_switch_button{
-    width: 80vw;
-    height: 20vh;
+    width: 25.6rem;
+    height: 11.36rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -217,8 +221,32 @@ body{
 }
 
 .select_switch_cont{
-    width: 40vw;
+    width: 12.8rem;
     display: flex;
     justify-content: space-between;
     padding: 1rem;
+}
+
+.switch_cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media only screen and (min-width: 900px){
+    .HPBar{
+        width: 14rem;
+    }
+    .battle_cont{
+        width: 51.2rem;
+        height: 45.44rem;
+    }
+    .textbox{
+        width: 51.2rem;
+        height: 9.088rem;
+    }
+    .battleSprite{
+        width: 4rem;
+        height: auto;
+    }
 }
