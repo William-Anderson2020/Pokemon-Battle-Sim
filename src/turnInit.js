@@ -314,6 +314,9 @@ export function turnInit(uParty, cParty){
                                         if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                             typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                            clickListener('.textbox_game_end', () => {
+                                                location.reload();
+                                            });
                                         }else{
                                             cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                             document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
@@ -334,6 +337,9 @@ export function turnInit(uParty, cParty){
                                             if(uHp.includes(true) == false){
                                                 typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                                 document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                                clickListener('.textbox_game_end', () => {
+                                                    location.reload();
+                                                });
                                             }else{
                                                 typewriterInit(document.querySelector('.textbox_text'), (`${sFix(uCurPkmn.name)} has fainted. Choose your next Pokemon.`));
                                                 pkmnSwitch(uCurPkmn, uParty);
@@ -362,6 +368,9 @@ export function turnInit(uParty, cParty){
                                     if(uHp.includes(true) == false){
                                         typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                        clickListener('.textbox_game_end', () => {
+                                            location.reload();
+                                        });
                                     }else{
                                         typewriterInit(document.querySelector('.textbox_text'), (`${sFix(uCurPkmn.name)} has fainted. Choose your next Pokemon.`));
                                         pkmnSwitch(uCurPkmn, uParty);
@@ -385,6 +394,9 @@ export function turnInit(uParty, cParty){
                                                 if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
                                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                                    clickListener('.textbox_game_end', () => {
+                                                        location.reload();
+                                                    });
                                                 }else{
                                                     cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                                     document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
