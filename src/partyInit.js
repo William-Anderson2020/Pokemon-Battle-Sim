@@ -26,6 +26,7 @@ class PKMN{
             back: pkmn.sprites.back_default
         }
         this.curHP = this.HP;
+        this.protected = false;
     }
 }
 

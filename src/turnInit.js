@@ -27,25 +27,32 @@ export function turnInit(uParty, cParty){
                 messege = `${sFix(curAttacker.name)} flailed about.`
             }else{
                 let dmgClass = curAttack.damage_class.name;
-                if(dmgClass == 'physical'){
-                    damageCalc('atk', curAttacker, curDefender, curAttack);
-                }else if(dmgClass == 'special'){
-                    damageCalc('sAtk', curAttacker, curDefender, curAttack);
-                }else if(dmgClass == 'status'){
+                if(dmgClass == 'status'){
                     if(curAttack.name == 'transform'){
+                        uParty[uParty.findIndex((el) => el == uCurPkmn)] = cCurPkmn;
                         uCurPkmn = cCurPkmn;
                         document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
                         document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                         document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                         messege = `Ditto transformed into ${sFix(uCurPkmn.name)}!`;
+                    }else if(curAttack.name == 'protect' || curAttack.name == 'detect'){
+                        messege = `${sFix(curAttacker.name)} used ${curAttack.name} and braced itself!`
+                        curAttacker.protected = true;
                     }else if(curAttack.stat_changes.length != 0){
                         statRes(curAttacker, curDefender, curAttack);
                     }else{
                         messege = `${sFix(curAttacker.name)} used ${sFix(curAttack.name)}, but it failed!`;
                     }
+                }else if(curDefender.protected == true){
+                    messege = `${sFix(curDefender.name)} protected itself from ${sFix(curAttacker.name)}'s ${curAttack.name}!`
+                }else if(dmgClass == 'special'){
+                    damageCalc('sAtk', curAttacker, curDefender, curAttack);
+                }else if(dmgClass == 'physical'){
+                    damageCalc('atk', curAttacker, curDefender, curAttack);
                 }
             }
             let hpBar;
+            curDefender.curHP = Math.round(curDefender.curHP);
             let hpRatio = (curDefender.curHP / curDefender.HP);
             if(curDefender.curHP <= 0){
                 hpRatio = 0;
@@ -60,6 +67,7 @@ export function turnInit(uParty, cParty){
             }
             width = hpBar.getBoundingClientRect().width * hpRatio;
             hpBar.style.setProperty('width', width);
+            curDefender.protected == false;
             messege = sFix(messege);
             typewriterInit(document.querySelector('.textbox_text'), messege);
             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_attack_next"> [Next] </span>';
@@ -122,6 +130,35 @@ export function turnInit(uParty, cParty){
             messege = `${sFix(curAttacker.name)} used ${sFix(attack.name)}. `;
             switch(attack.target.name){
                 case 'user':
+                    attack.stat_changes.forEach((el) => {
+                        switch(el.stat.name){
+                            case 'attack':
+                                curAttacker.atk *= (1 + (el.change * .5));
+                                messege += `It's attack rose! `;
+                                break;
+                            case 'defense':
+                                curAttacker.def *= (1 + (el.change * .5));
+                                messege += `It's defense rose! `;
+                                break;
+                            case 'special-attack':
+                                curAttacker.sAtk *= (1 + (el.change * .5));
+                                messege += `It's special attack rose! `;
+                                break;
+                            case 'special-defense':
+                                curAttacker.sDef *= (1 + (el.change * .5));
+                                messege += `It's special defense rose! `;
+                                break;
+                            case 'speed':
+                                curAttacker.speed *= (1 + (el.change * .5));
+                                messege += `It's speed rose! `
+                                break;
+                            default:
+                                messege += `But it failed... `;
+                                break;
+                        }
+                    });
+                    break;
+                case 'users-field':
                     attack.stat_changes.forEach((el) => {
                         switch(el.stat.name){
                             case 'attack':
@@ -312,6 +349,9 @@ export function turnInit(uParty, cParty){
                                         if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                             typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`);
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                            clickListener('.textbox_game_end', () => {
+                                                location.reload();
+                                            });
                                         }else{
                                             cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                             document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
@@ -333,6 +373,9 @@ export function turnInit(uParty, cParty){
                                             if(uHp.includes(true) == false){
                                                 typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                                 document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                                clickListener('.textbox_game_end', () => {
+                                                    location.reload();
+                                                });
                                             }else{
                                                 typewriterInit(document.querySelector('.textbox_text'), (`${sFix(uCurPkmn.name)} has fainted. Choose your next Pokemon.`));
                                                 pkmnSwitch(uCurPkmn, uParty);
@@ -361,6 +404,9 @@ export function turnInit(uParty, cParty){
                                     if(uHp.includes(true) == false){
                                         typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                        clickListener('.textbox_game_end', () => {
+                                            location.reload();
+                                        });
                                     }else{
                                         typewriterInit(document.querySelector('.textbox_text'), (`${sFix(uCurPkmn.name)} has fainted. Choose your next Pokemon.`));
                                         pkmnSwitch(uCurPkmn, uParty);
@@ -384,6 +430,9 @@ export function turnInit(uParty, cParty){
                                                 if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
                                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
+                                                    clickListener('.textbox_game_end', () => {
+                                                        location.reload();
+                                                    });
                                                 }else{
                                                     cCurPkmn = cParty[cParty.indexOf(cCurPkmn)+1];
                                                     document.querySelector('.compSprite').src = cCurPkmn.sprite.front;
