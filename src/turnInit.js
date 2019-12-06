@@ -33,6 +33,7 @@ export function turnInit(uParty, cParty){
                     damageCalc('sAtk', curAttacker, curDefender, curAttack);
                 }else if(dmgClass == 'status'){
                     if(curAttack.name == 'transform'){
+                        uParty[uParty.findIndex((el) => el == uCurPkmn)] = cCurPkmn;
                         uCurPkmn = cCurPkmn;
                         document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
                         document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
