@@ -152,6 +152,35 @@ export function turnInit(uParty, cParty){
                         }
                     });
                     break;
+                case 'users-field':
+                    attack.stat_changes.forEach((el) => {
+                        switch(el.stat.name){
+                            case 'attack':
+                                curAttacker.atk *= (1 + (el.change * .5));
+                                messege += `It's attack rose! `;
+                                break;
+                            case 'defense':
+                                curAttacker.def *= (1 + (el.change * .5));
+                                messege += `It's defense rose! `;
+                                break;
+                            case 'special-attack':
+                                curAttacker.sAtk *= (1 + (el.change * .5));
+                                messege += `It's special attack rose! `;
+                                break;
+                            case 'special-defense':
+                                curAttacker.sDef *= (1 + (el.change * .5));
+                                messege += `It's special defense rose! `;
+                                break;
+                            case 'speed':
+                                curAttacker.speed *= (1 + (el.change * .5));
+                                messege += `It's speed rose! `
+                                break;
+                            default:
+                                messege += `But it failed... `;
+                                break;
+                        }
+                    });
+                    break;
                 case 'all-opponents':
                     attack.stat_changes.forEach((el) => {
                         switch(el.stat.name){
