@@ -27,6 +27,10 @@ class PKMN{
         }
         this.curHP = this.HP;
         this.protected = false;
+        if(Math.random() >= .9){
+            this.sprite.front = pkmn.sprites.front_shiny;
+            this.sprite.back = pkmn.sprites.back_shiny;
+        };
     }
 }
 

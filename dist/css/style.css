@@ -249,4 +249,10 @@ body{
         width: 20rem;
         height: auto;
     }
+    .battle_button_cont{
+        width: 51.2rem;
+    }
+    .userSprite {
+        transform: translate(-4rem, 9rem);
+    }
 }
