@@ -329,7 +329,7 @@ export async function turnInit(uParty, cParty){
         }
 
         function potionUse(p, pCount){
-            document.querySelector('.battle_button_cont').innerHTML = `<button class="potion"><img src="${p.sprites.default}"> Heal 20 HP on your current Pkmn.</button>`;
+            document.querySelector('.battle_button_cont').innerHTML = `<button class="potion"><img src="${p.sprites.default}"> Heal 20 HP on your current Pkmn (x${pCount}).</button>`;
             let messege;
             clickListener('.potion', () => {
                 if (uCurPkmn.curHP <= 0){
