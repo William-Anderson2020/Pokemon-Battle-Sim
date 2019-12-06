@@ -27,11 +27,7 @@ export function turnInit(uParty, cParty){
                 messege = `${sFix(curAttacker.name)} flailed about.`
             }else{
                 let dmgClass = curAttack.damage_class.name;
-                if(dmgClass == 'physical'){
-                    damageCalc('atk', curAttacker, curDefender, curAttack);
-                }else if(dmgClass == 'special'){
-                    damageCalc('sAtk', curAttacker, curDefender, curAttack);
-                }else if(dmgClass == 'status'){
+                if(dmgClass == 'status'){
                     if(curAttack.name == 'transform'){
                         uParty[uParty.findIndex((el) => el == uCurPkmn)] = cCurPkmn;
                         uCurPkmn = cCurPkmn;
@@ -39,11 +35,20 @@ export function turnInit(uParty, cParty){
                         document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                         document.querySelector('.uPkmnName').innerHTML = sFix(uCurPkmn.name);
                         messege = `Ditto transformed into ${sFix(uCurPkmn.name)}!`;
+                    }else if(curAttack.name == 'protect' || curAttack.name == 'detect'){
+                        messege = `${sFix(curAttacker.name)} used ${curAttack.name} and braced itself!`
+                        curAttacker.protected = true;
                     }else if(curAttack.stat_changes.length != 0){
                         statRes(curAttacker, curDefender, curAttack);
                     }else{
                         messege = `${sFix(curAttacker.name)} used ${sFix(curAttack.name)}, but it failed!`;
                     }
+                }else if(curDefender.protected == true){
+                    messege = `${sFix(curDefender.name)} protected itself from ${sFix(curAttacker.name)}'s ${curAttack.name}!`
+                }else if(dmgClass == 'special'){
+                    damageCalc('sAtk', curAttacker, curDefender, curAttack);
+                }else if(dmgClass == 'physical'){
+                    damageCalc('atk', curAttacker, curDefender, curAttack);
                 }
             }
             let hpBar;
@@ -62,6 +67,7 @@ export function turnInit(uParty, cParty){
             }
             width = hpBar.getBoundingClientRect().width * hpRatio;
             hpBar.style.setProperty('width', width);
+            curDefender.protected == false;
             messege = sFix(messege);
             typewriterInit(document.querySelector('.textbox_text'), messege);
             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_attack_next"> [Next] </span>';
