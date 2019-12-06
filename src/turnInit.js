@@ -1,13 +1,14 @@
 import { clickListener } from "./clickListener";
-import { typewriterInit, sFix, barCheck } from "./anim"
+import { typewriterInit, sFix, barCheck } from "./anim";
+import { get } from "./apiCall";
 
-export function turnInit(uParty, cParty){
+export async function turnInit(uParty, cParty){
     let window = document.querySelector('.window');
 
     let uCurPkmn = uParty[0];
     let cCurPkmn = cParty[0];
 
-    let potion = get.item('potion');
+    let potion = await get.item('potion');
     let potionCount = 5;
 
     console.log(uParty, cParty);
@@ -327,8 +328,9 @@ export function turnInit(uParty, cParty){
             });
         }
 
-        function potionUse(){
-            document.querySelector('.battle_button_cont').innerHTML = `<button class="potion"><img src="${potion.sprites.default}"> Heal 20 HP on your current Pkmn.</button>`;
+        function potionUse(p, pCount){
+            document.querySelector('.battle_button_cont').innerHTML = `<button class="potion"><img src="${p.sprites.default}"> Heal 20 HP on your current Pkmn.</button>`;
+            let messege;
             clickListener('.potion', () => {
                 if (uCurPkmn.curHP <= 0){
                     messege = `${sFix(uCurPkmn.name)} has fainted and can't be healed.`;
@@ -339,10 +341,20 @@ export function turnInit(uParty, cParty){
                     if(uCurPkmn.curHP > uCurPkmn.HP){
                         uCurPkmn.curHP = uCurPkmn.HP;
                     }
+                    pCount--;
                 }
-                hpBar = document.querySelector('.uHPBarFill'); 
-                
+                let hpRatio = uCurPkmn.curHP / uCurPkmn.HP;
+                let hpBar = document.querySelector('.uHPBarFill'); 
+                let width = hpBar.getBoundingClientRect().width * hpRatio;
                 barCheck('u', uCurPkmn);
+                typewriterInit(document.querySelector('.textbox_text'), messege);
+                document.querySelector('.textbox_next').innerHTML = '<span class="textbox_potion_next"> [Next] </span>';
+                
+                clickListener('.textbox_potion_next', () => {
+                    document.querySelector('.battle_button_cont').innerHTML = '';
+                    turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
+                    clickListener('.textbox_attack_next', buttonInit);
+                });
             });
         }
         
@@ -476,7 +488,7 @@ export function turnInit(uParty, cParty){
                     });      
                     break;
                 case '1':
-                    
+                    potionUse(potion, potionCount);
                     break;
                 case '2':
                     pkmnSwitch(uCurPkmn, uParty);
