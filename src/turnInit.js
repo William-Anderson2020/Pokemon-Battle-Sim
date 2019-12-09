@@ -339,12 +339,11 @@ export async function turnInit(uParty, cParty){
                     }else if(uCurPkmn.curHP == uCurPkmn.HP){
                         messege = `${sFix(uCurPkmn.name)} is already fully healed.`
                     }else{
-                        console.log(uCurPkmn.curHP);
+                        potionCount--;
                         uCurPkmn.curHP += 20;
                         if(uCurPkmn.curHP > uCurPkmn.HP){
                             uCurPkmn.curHP = uCurPkmn.HP;
                         }
-                        console.log(uCurPkmn.curHP);
                         messege = `${sFix(uCurPkmn.name)} had its health restored!`
                         document.querySelector('.battle_button_cont').innerHTML = '';
                         let hpRatio = uCurPkmn.curHP / uCurPkmn.HP;
@@ -359,7 +358,6 @@ export async function turnInit(uParty, cParty){
                             turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
                             clickListener('.textbox_attack_next', buttonInit);
                         });
-                        pCount--;
                     }
                 }else{
                     messege = `You are out of this item.`
