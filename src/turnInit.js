@@ -69,7 +69,7 @@ export async function turnInit(uParty, cParty){
                 hpBar = document.querySelector('.uHPBarFill');
                 barCheck('u', uCurPkmn);
             }
-            width = hpBar.getBoundingClientRect().width * hpRatio;
+            width = (document.querySelector('.HPBar').getBoundingClientRect().width - 8) * hpRatio;
             hpBar.style.setProperty('width', width);
             curDefender.protected == false;
             messege = sFix(messege);
@@ -346,9 +346,11 @@ export async function turnInit(uParty, cParty){
                         }
                         console.log(uCurPkmn.curHP);
                         messege = `${sFix(uCurPkmn.name)} had its health restored!`
+                        document.querySelector('.battle_button_cont').innerHTML = '';
                         let hpRatio = uCurPkmn.curHP / uCurPkmn.HP;
                         let hpBar = document.querySelector('.uHPBarFill'); 
-                        let width = hpBar.getBoundingClientRect().width * hpRatio;
+                        let width = (document.querySelector('.HPBar').getBoundingClientRect().width - 8) * hpRatio;
+                        hpBar.style.setProperty('width', width);
                         barCheck('u', uCurPkmn);
                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_potion_next"> [Next] </span>';
                         

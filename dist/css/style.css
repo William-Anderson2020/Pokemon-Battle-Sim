@@ -71,6 +71,7 @@ body{
     font-family: 'Press Start 2P', cursive;
     font-size: .96rem;
     width: 16rem;
+    margin-bottom: 1rem;
 }
 
 .pkmn_select_cont{
@@ -175,7 +176,6 @@ body{
 
 .battle_button_cont_atk{
     width: inherit;
-    height: 14.2rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -247,6 +247,7 @@ body{
     display: flex;
     justify-content: left;
     width: 100%;
+    height: fit-content;
     padding: 0 2rem;
 }
 
@@ -277,6 +278,7 @@ body{
     }
     .battle_button_cont{
         width: 51.2rem;
+        height: 10rem;
     }
     .userSprite {
         transform: translate(-4rem, 9rem);
