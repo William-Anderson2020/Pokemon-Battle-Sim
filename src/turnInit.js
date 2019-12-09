@@ -329,44 +329,55 @@ export async function turnInit(uParty, cParty){
         }
 
         function potionUse(p, pCount){
-            document.querySelector('.battle_button_cont').innerHTML = `<button class="potion"><img src="${p.sprites.default}"> Heal 20 HP on your current Pkmn (x${pCount}).</button>`;
+            document.querySelector('.battle_button_cont').innerHTML = `<div class="return_cont"><div class="return"><</div></div><div class="item_disp_cont"><button class="potion"><img src="${p.sprites.default}"> Heal 20 HP on your current Pkmn (x${pCount}).</button></div>`;
+            clickListener('.return', buttonInit);
             let messege;
             clickListener('.potion', () => {
-                if (uCurPkmn.curHP <= 0){
-                    messege = `${sFix(uCurPkmn.name)} has fainted and can't be healed.`;
-                }else if(uCurPkmn.curHP == uCurPkmn.HP){
-                    messege = `${sFix(uCurPkmn.name)} is already fully healed.`
-                }else{
-                    uCurPkmn.curHP += 20;
-                    if(uCurPkmn.curHP > uCurPkmn.HP){
-                        uCurPkmn.curHP = uCurPkmn.HP;
+                if(pCount > 0){
+                    if (uCurPkmn.curHP <= 0){
+                        messege = `${sFix(uCurPkmn.name)} has fainted and can't be healed.`;
+                    }else if(uCurPkmn.curHP == uCurPkmn.HP){
+                        messege = `${sFix(uCurPkmn.name)} is already fully healed.`
+                    }else{
+                        console.log(uCurPkmn.curHP);
+                        uCurPkmn.curHP += 20;
+                        if(uCurPkmn.curHP > uCurPkmn.HP){
+                            uCurPkmn.curHP = uCurPkmn.HP;
+                        }
+                        console.log(uCurPkmn.curHP);
+                        messege = `${sFix(uCurPkmn.name)} had its health restored!`
+                        let hpRatio = uCurPkmn.curHP / uCurPkmn.HP;
+                        let hpBar = document.querySelector('.uHPBarFill'); 
+                        let width = hpBar.getBoundingClientRect().width * hpRatio;
+                        barCheck('u', uCurPkmn);
+                        document.querySelector('.textbox_next').innerHTML = '<span class="textbox_potion_next"> [Next] </span>';
+                        
+                        clickListener('.textbox_potion_next', () => {
+                            document.querySelector('.battle_button_cont').innerHTML = '';
+                            turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
+                            clickListener('.textbox_attack_next', buttonInit);
+                        });
+                        pCount--;
                     }
-                    pCount--;
+                }else{
+                    messege = `You are out of this item.`
                 }
-                let hpRatio = uCurPkmn.curHP / uCurPkmn.HP;
-                let hpBar = document.querySelector('.uHPBarFill'); 
-                let width = hpBar.getBoundingClientRect().width * hpRatio;
-                barCheck('u', uCurPkmn);
                 typewriterInit(document.querySelector('.textbox_text'), messege);
-                document.querySelector('.textbox_next').innerHTML = '<span class="textbox_potion_next"> [Next] </span>';
-                
-                clickListener('.textbox_potion_next', () => {
-                    document.querySelector('.battle_button_cont').innerHTML = '';
-                    turnRes(cCurPkmn, uCurPkmn, cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))], 'u');
-                    clickListener('.textbox_attack_next', buttonInit);
-                });
             });
         }
         
         clickListener('.turn_button', (function(e){
             let selection = e.target.value;
             let buttonCont = document.querySelector('.battle_button_cont');
-            document.querySelector('.battle_button_cont').innerHTML = ''
+            document.querySelector('.battle_button_cont').innerHTML = '<div class="battle_button_cont_atk">';
+            let buttonContAtk = document.querySelector('.battle_button_cont_atk');
             switch(selection){
                 case '0':
                     uCurPkmn.moves.forEach((el, i) => {
-                        buttonCont.insertAdjacentHTML('beforeend', `<button class="attack_button btn" value="${i}">${sFix(el.name)}</button>`);
+                        buttonContAtk.insertAdjacentHTML('beforeend', `<button class="attack_button btn" value="${i}">${sFix(el.name)}</button>`);
                     });
+                    buttonCont.insertAdjacentHTML('afterbegin', `<div class="return_cont"><div class="return"><</div></div>`);
+                    clickListener('.return', buttonInit);
                     clickListener('.attack_button', (at) => {
                         let uAttack = uCurPkmn.moves[at.target.value];
                         let cAttack = cCurPkmn.moves[Math.round(Math.random()*(cCurPkmn.moves.length-1))];

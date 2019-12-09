@@ -166,11 +166,20 @@ body{
 
 .battle_button_cont{
     width: inherit;
-    height: 14.2rem;
+    height: 14rem;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding: .5rem;
+    padding: .2rem;
+}
+
+.battle_button_cont_atk{
+    width: inherit;
+    height: 14.2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .attack_button{
@@ -218,6 +227,7 @@ body{
     font-size: 1rem;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 5rem;
+    text-align: center;
 }
 
 .select_switch_cont{
@@ -231,6 +241,22 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.return_cont{
+    display: flex;
+    justify-content: left;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.return{
+    padding: .5rem;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5rem;
+    text-align: center;
+    height: fit-content;
 }
 
 @media only screen and (min-width: 900px){
