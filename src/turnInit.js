@@ -11,7 +11,7 @@ export async function turnInit(uParty, cParty){
     let potion = await get.item('potion');
     let potionCount = 5;
 
-    console.log(uParty, cParty);
+    //console.log(uParty, cParty);
     window.innerHTML = `<div class="battle_cont"><div class="disp cDisp"> <div class="name, cPkmnName"></div> <div class="cHPBar HPBar"> <div class="cHPBarFill HPBarFill"></div> </div> </div><div class="battle_sprite_cont"><img class='userSprite battleSprite' src="${uCurPkmn.sprite.back}"></img><img class='compSprite battleSprite' src="${cCurPkmn.sprite.front}"></div> <div class="disp uDisp"> <div class="name, uPkmnName"></div> <div class="uHPBar HPBar"> <div class="uHPBarFill HPBarFill"></div> </div> </div>  </div> <div class="textbox"> <div class="textbox_text"></div> <div class="textbox_next"></div> </div> <div class="battle_button_cont"> <button class="turn_button btn" value="0">Attack</button><button class="turn_button btn" value="1">Items</button><button class="turn_button btn" value="2">Pokemon</button> </div>`;
 
     function buttonInit(){
@@ -290,10 +290,8 @@ export async function turnInit(uParty, cParty){
                 });
                 clickListener('.pkmn_switch_button_active', (el) => {
                     let choice = el.target.value;
-                    console.log(choice);
-                    if(uCurPkmn != uParty[choice]){
+                    if(curPkmn != uParty[choice]){
                         uCurPkmn = uParty[choice];
-                        console.log(uCurPkmn, uParty, choice);
                         document.querySelector('.userSprite').src = uCurPkmn.sprite.back;
                         document.querySelector('.uHPBarFill').style.setProperty('width', hpBarWidth * (uCurPkmn.curHP / uCurPkmn.HP));
                         barCheck('u', uCurPkmn);
@@ -414,7 +412,6 @@ export async function turnInit(uParty, cParty){
                                     clickListener('.textbox_attack_next', () => {
                                         if(uCurPkmn.curHP <= 0){
                                             let uHp = uParty.map(pk => pk.curHP > 0);
-                                            console.log(uHp);
                                             if(uHp.includes(true) == false){
                                                 typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                                 document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
@@ -445,7 +442,6 @@ export async function turnInit(uParty, cParty){
                             clickListener('.textbox_attack_next', () => {
                                 if(uCurPkmn.curHP <= 0){
                                     let uHp = uParty.map(pk => pk.curHP > 0);
-                                    console.log(uHp);
                                     if(uHp.includes(true) == false){
                                         typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
