@@ -65,7 +65,9 @@ export async function turnInit(uParty, cParty){
             let width;
             if(target == 'c'){
                 hpBar = document.querySelector('.cHPBarFill');
+                //document.querySelector('.userSprite').style.transform = 'translateY(1rem)';
                 barCheck('c', cCurPkmn);
+                //document.querySelector('.userSprite').style.transform = 'translateY(-1rem)';
             }else{
                 hpBar = document.querySelector('.uHPBarFill');
                 barCheck('u', uCurPkmn);
