@@ -49,6 +49,7 @@ export async function turnInit(uParty, cParty){
                     }
                 }else if(curDefender.protected == true){
                     messege = `${sFix(curDefender.name)} protected itself from ${sFix(curAttacker.name)}'s ${curAttack.name}!`
+                    curDefender.protected = false;
                 }else if(dmgClass == 'special'){
                     damageCalc('sAtk', curAttacker, curDefender, curAttack);
                 }else if(dmgClass == 'physical'){
