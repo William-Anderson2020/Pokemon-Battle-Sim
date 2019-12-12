@@ -295,7 +295,7 @@ body{
         height: 10rem;
     }
     .userSprite {
-        transform: translate(-4rem, 9rem);
+        transform: translate(-3rem, 9rem);
     }
     .userSpriteAtk{
         animation: uPkmnAtkRes2;
@@ -314,11 +314,11 @@ body{
 }
 
 @keyframes uPkmnAtkRes2{
-    0%{transform: translate(-4rem, 9rem);}
-    25%{transform: translate(-2rem, 7rem);}
-    50%{transform: translate(-2rem, 8rem);}
-    75%{transform: translate(-2rem, 7rem);}
-    100%{transform: translate(-4rem, 9rem);}
+    0%{transform: translate(-3rem, 9rem);}
+    25%{transform: translate(-1rem, 7rem);}
+    50%{transform: translate(-1rem, 8rem);}
+    75%{transform: translate(-1rem, 7rem);}
+    100%{transform: translate(-3rem, 9rem);}
 }
 
 @keyframes cPkmnAtk{
