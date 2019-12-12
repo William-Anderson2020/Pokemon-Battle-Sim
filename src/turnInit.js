@@ -1,5 +1,5 @@
 import { clickListener } from "./clickListener";
-import { typewriterInit, sFix, barCheck } from "./anim";
+import { typewriterInit, sFix, barCheck, userAtk, compAtk } from "./anim";
 import { get } from "./apiCall";
 
 export async function turnInit(uParty, cParty){
@@ -65,11 +65,11 @@ export async function turnInit(uParty, cParty){
             let width;
             if(target == 'c'){
                 hpBar = document.querySelector('.cHPBarFill');
-                //document.querySelector('.userSprite').style.transform = 'translateY(1rem)';
+                userAtk();
                 barCheck('c', cCurPkmn);
-                //document.querySelector('.userSprite').style.transform = 'translateY(-1rem)';
             }else{
                 hpBar = document.querySelector('.uHPBarFill');
+                compAtk();
                 barCheck('u', uCurPkmn);
             }
             width = (document.querySelector('.HPBar').getBoundingClientRect().width - 8) * hpRatio;

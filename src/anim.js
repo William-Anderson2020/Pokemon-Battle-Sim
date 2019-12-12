@@ -55,3 +55,13 @@ export function barCheck(target, curPkmn){
     
     el.style.backgroundColor = color;
 }
+
+export function userAtk(){
+    document.querySelector('.userSprite').classList.add('userSpriteAtk');
+    setTimeout(function(){document.querySelector('.userSprite').classList.remove('userSpriteAtk')}, 1000)
+}
+
+export function compAtk(){
+    document.querySelector('.compSprite').classList.add('compSpriteAtk');
+    setTimeout(function(){document.querySelector('.compSprite').classList.remove('compSpriteAtk')}, 1000)
+}
