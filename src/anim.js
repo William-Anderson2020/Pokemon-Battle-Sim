@@ -65,3 +65,13 @@ export function compAtk(){
     document.querySelector('.compSprite').classList.add('compSpriteAtk');
     setTimeout(function(){document.querySelector('.compSprite').classList.remove('compSpriteAtk')}, 1000)
 }
+
+export function userRecoil(){
+    document.querySelector('.userSprite').classList.add('userSpriteRecoil');
+    setTimeout(function(){document.querySelector('.userSprite').classList.remove('userSpriteRecoil')}, 1000)
+}
+
+export function compRecoil(){
+    document.querySelector('.compSprite').classList.add('compSpriteRecoil');
+    setTimeout(function(){document.querySelector('.compSprite').classList.remove('compSpriteRecoil')}, 1000)
+}

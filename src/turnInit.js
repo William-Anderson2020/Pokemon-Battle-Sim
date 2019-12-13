@@ -1,5 +1,5 @@
 import { clickListener } from "./clickListener";
-import { typewriterInit, sFix, barCheck, userAtk, compAtk } from "./anim";
+import { typewriterInit, sFix, barCheck, userAtk, compAtk, compRecoil, userRecoil } from "./anim";
 import { get } from "./apiCall";
 
 export async function turnInit(uParty, cParty){
@@ -66,10 +66,12 @@ export async function turnInit(uParty, cParty){
             if(target == 'c'){
                 hpBar = document.querySelector('.cHPBarFill');
                 userAtk();
+                compRecoil();
                 barCheck('c', cCurPkmn);
             }else{
                 hpBar = document.querySelector('.uHPBarFill');
                 compAtk();
+                userRecoil();
                 barCheck('u', uCurPkmn);
             }
             width = (document.querySelector('.HPBar').getBoundingClientRect().width - 8) * hpRatio;
