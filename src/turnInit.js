@@ -397,6 +397,7 @@ export async function turnInit(uParty, cParty){
                                     clickListener('.textbox_opponent_fainted', () => {
                                         if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                             typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`);
+                                            document.querySelector('.compSprite').innerHTML = '';
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                             clickListener('.textbox_game_end', () => {
                                                 location.reload();
@@ -420,6 +421,7 @@ export async function turnInit(uParty, cParty){
                                             let uHp = uParty.map(pk => pk.curHP > 0);
                                             if(uHp.includes(true) == false){
                                                 typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
+                                                document.querySelector('.userSprite').innerHTML = '';
                                                 document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                                 clickListener('.textbox_game_end', () => {
                                                     location.reload();
@@ -450,6 +452,7 @@ export async function turnInit(uParty, cParty){
                                     let uHp = uParty.map(pk => pk.curHP > 0);
                                     if(uHp.includes(true) == false){
                                         typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
+                                        document.querySelector('.userSprite').innerHTML = '';
                                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                         clickListener('.textbox_game_end', () => {
                                             location.reload();
@@ -476,6 +479,7 @@ export async function turnInit(uParty, cParty){
                                             clickListener('.textbox_opponent_fainted', () => {
                                                 if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`)
+                                                    document.querySelector('.compSprite').innerHTML = '';
                                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                                     clickListener('.textbox_game_end', () => {
                                                         location.reload();
