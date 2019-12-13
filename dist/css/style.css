@@ -342,11 +342,11 @@ body{
 }
 
 @keyframes cPkmnAtk{
-    0%{transform: translate(2rem, -2rem);}
-    25%{transform: translate(0rem, 1rem);}
-    50%{transform: translate(0rem, -1rem);}
-    75%{transform: translate(0rem, 1rem);}
-    100%{transform: translate(2rem, -2rem);}
+    0%{transform: translate(2rem, -1rem);}
+    25%{transform: translate(0rem, 2rem);}
+    50%{transform: translate(0rem, -0rem);}
+    75%{transform: translate(0rem, 2rem);}
+    100%{transform: translate(2rem, -1rem);}
 }
 
 @keyframes uPkmnRecoil{
@@ -366,9 +366,9 @@ body{
 }
 
 @keyframes cPkmnRecoil{
-    0%{transform: translate(2rem, -2rem);}
-    25%{transform: translate(3rem, -3rem);}
-    50%{transform: translate(3rem, -2.6rem);}
-    75%{transform: translate(3rem, -2.3rem);}
-    100%{transform: translate(2rem, -2rem);}
+    0%{transform: translate(2rem, -1rem);}
+    25%{transform: translate(3rem, -2rem);}
+    50%{transform: translate(3rem, -1.6rem);}
+    75%{transform: translate(3rem, -1.3rem);}
+    100%{transform: translate(2rem, -1rem);}
 }
