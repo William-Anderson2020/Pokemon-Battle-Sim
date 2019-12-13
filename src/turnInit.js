@@ -3,6 +3,7 @@ import { typewriterInit, sFix, barCheck, userAtk, compAtk, compRecoil, userRecoi
 import { get } from "./apiCall";
 
 export async function turnInit(uParty, cParty){
+    document.getElementsByTagName('BODY')[0].insertAdjacentHTML('beforeend' ,`<audio autoplay loop src="./css/battle1.mp3" type="audio/mpeg"></audio>`)
     let window = document.querySelector('.window');
 
     let uCurPkmn = uParty[0];
