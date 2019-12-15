@@ -398,7 +398,7 @@ export async function turnInit(uParty, cParty){
                                         if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                             typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`);
                                             document.querySelector('.audio_cont').innerHTML = `<audio autoplay src="./css/themes/win.mp3" type="audio/mpeg"></audio>`;
-                                            document.querySelector('.compSprite').src = '';
+                                            document.querySelector('.compSprite').style.opacity = '0';
                                             document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                             clickListener('.textbox_game_end', () => {
                                                 location.reload();
@@ -423,7 +423,7 @@ export async function turnInit(uParty, cParty){
                                             if(uHp.includes(true) == false){
                                                 typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                                 document.querySelector('.audio_cont').innerHTML = `<audio autoplay src="./css/themes/win.mp3" type="audio/mpeg"></audio>`;
-                                                document.querySelector('.userSprite').src = '';
+                                                document.querySelector('.userSprite').style.opacity = '0';
                                                 document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                                 clickListener('.textbox_game_end', () => {
                                                     location.reload();
@@ -455,7 +455,7 @@ export async function turnInit(uParty, cParty){
                                     if(uHp.includes(true) == false){
                                         typewriterInit(document.querySelector('.textbox_text'), `You are out of useable Pokemon... Game Over.`);
                                         document.querySelector('.audio_cont').innerHTML = `<audio autoplay src="./css/themes/win.mp3" type="audio/mpeg"></audio>`;
-                                        document.querySelector('.userSprite').src = '';
+                                        document.querySelector('.userSprite').style.opacity = '0';
                                         document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                         clickListener('.textbox_game_end', () => {
                                             location.reload();
@@ -483,7 +483,7 @@ export async function turnInit(uParty, cParty){
                                                 if(cParty.indexOf(cCurPkmn) == (cParty.length - 1)){
                                                     typewriterInit(document.querySelector('.textbox_text'), `Your oppoent is out of useable pokemon. You win!`);
                                                     document.querySelector('.audio_cont').innerHTML = `<audio autoplay src="./css/themes/win.mp3" type="audio/mpeg"></audio>`;
-                                                    document.querySelector('.compSprite').src = '';
+                                                    document.querySelector('.compSprite').style.opacity = '0';
                                                     document.querySelector('.textbox_next').innerHTML = '<span class="textbox_game_end"> [Next] </span>';
                                                     clickListener('.textbox_game_end', () => {
                                                         location.reload();
